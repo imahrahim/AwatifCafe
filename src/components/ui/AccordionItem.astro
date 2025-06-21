@@ -5,10 +5,23 @@ type Props = {
   description?: string;
   items: {
     category: string;
-    items?: { name: string; price: string; description?: string }[];
+    priceLabels?: string[];
+    items?: ({
+      name: string;
+      price: string;
+      description?: string;
+    } | {
+      name: string;
+      prices: string[];
+      description?: string;
+    })[];
     subcategories?: {
       category: string;
-      items: { name: string; price: string; description?: string }[];
+      items: {
+        name: string;
+        price: string;
+        description?: string;
+      }[];
     }[];
   }[];
 };
@@ -26,17 +39,17 @@ const { index, title, description, items } = Astro.props;
     aria-expanded="false"
     aria-controls={`${title} accordion__item menu content`}
   >
-<div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-[25px] text-left">
-  <div class="flex items-center gap-2 sm:gap-[5px]">
-    <span class="text-xl font-bold">{title}</span>
-  </div>
-  {description && (
-    <p class="text-sm text-gray-500 leading-tight sm:ml-4 sm:mt-0 mt-1">
-      {description}
-    </p>
-  )}
-</div>
-<div class="accordion__icon relative w-4 h-4 ml-auto mr-[5px]" aria-hidden="true"></div>
+    <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-[25px] text-left">
+      <div class="flex items-center gap-2 sm:gap-[5px]">
+        <span class="text-xl font-bold">{title}</span>
+      </div>
+      {description && (
+        <p class="text-sm text-gray-500 leading-tight sm:ml-4 sm:mt-0 mt-1">
+          {description}
+        </p>
+      )}
+    </div>
+    <div class="accordion__icon relative w-4 h-4 ml-auto mr-[5px]" aria-hidden="true"></div>
   </button>
 
   <div
@@ -48,65 +61,71 @@ const { index, title, description, items } = Astro.props;
 
     {items && items.map((group) => (
       <div class="mb-6">
-       <h4 class="font-bold text-lg mb-2 text-inherit">{group.category}</h4>
+        <h4 class="font-bold text-lg mb-2 text-inherit">{group.category}</h4>
 
-      {group.items ? (
-  group.priceLabels && group.priceLabels.length > 1 ? (
-    <>
-      <div class="flex justify-end gap-10 text-sm italic font-semibold text-right mt-1 mb-1 pr-2">
-        {group.priceLabels.map((label) => (
-          <span>{label}</span>
-        ))}
-      </div>
-      <ul class="grid gap-2 text-base">
-        {group.items.map((entry) => (
-          <li class="border-b border-black/10 pb-2">
-            <div class="flex justify-between gap-10">
-              <span>{entry.name}</span>
-<div class="flex gap-10 font-semibold italic justify-end min-w-[80px]">
-  <span class="w-[30px] text-right">{entry.prices?.[0] || ""}</span>
-  <span class="w-[30px] text-right">{entry.prices?.[1] || ""}</span>
-</div>
-            </div>
-            {entry.description && (
-              <div class="text-xs text-gray-500 mt-0.5">{entry.description}</div>
-            )}
-          </li>
-        ))}
-      </ul>
-    </>
-  ) : (
-    <ul class="grid gap-2 text-base">
-      {group.items.map((entry) => (
-        <li class="border-b border-black/10 pb-2">
-          <div class="flex justify-between">
-            <span>{entry.name}</span>
-            <span class="font-semibold">{entry.price}</span>
+        {group.items ? (
+          group.priceLabels && group.priceLabels.length > 1 ? (
+            <>
+              <div class="flex justify-end gap-10 text-sm italic font-semibold text-right mt-1 mb-1 pr-2">
+                {group.priceLabels.map((label) => (
+                  <span>{label}</span>
+                ))}
+              </div>
+              <ul class="grid gap-2 text-base">
+                {group.items.map((entry) => (
+                  <li class="border-b border-black/10 pb-2">
+                    <div class="flex justify-between gap-10">
+                      <span>{entry.name}</span>
+                      {"prices" in entry ? (
+                        <div class="flex gap-10 font-semibold italic justify-end min-w-[80px]">
+                          <span class="w-[30px] text-right">{entry.prices[0]}</span>
+                          <span class="w-[30px] text-right">{entry.prices[1]}</span>
+                        </div>
+                      ) : (
+                        <span class="font-semibold">{entry.price}</span>
+                      )}
+                    </div>
+                    {entry.description && (
+                      <div class="text-xs text-gray-500 mt-0.5">{entry.description}</div>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <ul class="grid gap-2 text-base">
+              {group.items.map((entry) => (
+                <li class="border-b border-black/10 pb-2">
+                  <div class="flex justify-between">
+                    <span>{entry.name}</span>
+                    <span class="font-semibold">
+  {"price" in entry ? entry.price : entry.prices?.[0] ?? ""}
+</span>
+                  </div>
+                  {entry.description && (
+                    <div class="text-xs text-gray-500 mt-0.5">{entry.description}</div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )
+        ) : group.subcategories ? (
+          <div class="grid gap-4">
+            {group.subcategories.map((sub) => (
+              <div>
+                <h5 class="text-base font-italic mb-1">{sub.category}</h5>
+                <ul class="grid gap-1 text-sm border-l pl-4 border-black/10">
+                  {sub.items.map((entry) => (
+                    <li class="flex justify-between text-sm">
+                      <span>{entry.name}</span>
+                      <span class="font-semibold">{entry.price}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-          {entry.description && (
-            <div class="text-xs text-gray-500 mt-0.5">{entry.description}</div>
-          )}
-        </li>
-      ))}
-    </ul>
-  )
-) : group.subcategories ? (
-  <div class="grid gap-4">
-    {group.subcategories.map((sub) => (
-      <div>
-        <h5 class="text-base font-italic mb-1">{sub.category}</h5>
-        <ul class="grid gap-1 text-sm border-l pl-4 border-black/10">
-          {sub.items.map((entry) => (
-            <li class="flex justify-between text-sm">
-              <span>{entry.name}</span>
-              <span class="font-semibold">{entry.price}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    ))}
-  </div>
-) : null}
+        ) : null}
       </div>
     ))}
   </div>
@@ -115,7 +134,7 @@ const { index, title, description, items } = Astro.props;
 <style>
 .accordion__item {
   transition: background-color 0.4s ease, color 0.4s ease;
-  background-color:rgba(248, 195, 218, 0.37);
+  background-color: rgba(248, 195, 218, 0.37);
   color: #673606;
 }
 
@@ -123,12 +142,12 @@ const { index, title, description, items } = Astro.props;
   background-color: #f8c3da !important;
   color: #673606 !important;
 }
- .accordion__icon {
+
+.accordion__icon {
   position: relative;
   width: 1rem;
   height: 1rem;
 }
-
 
 .accordion__icon::before,
 .accordion__icon::after {
@@ -161,9 +180,7 @@ const { index, title, description, items } = Astro.props;
 
 <script>
   function accordionSetup() {
-    const accordionItems = document.querySelectorAll(
-      ".accordion__item"
-    );
+    const accordionItems = document.querySelectorAll(".accordion__item");
 
     accordionItems.forEach((accordionItem) => {
       const accordionToggle = accordionItem.querySelector(".accordion__toggle");
@@ -174,17 +191,14 @@ const { index, title, description, items } = Astro.props;
           e.stopPropagation();
 
           accordionItems.forEach((otherItem) => {
-            if (
-              otherItem !== accordionItem &&
-              otherItem.classList.contains("active")
-            ) {
+            if (otherItem !== accordionItem && otherItem.classList.contains("active")) {
               const otherToggle = otherItem.querySelector(".accordion__toggle");
               const otherIcon = otherItem.querySelector(".accordion__icon");
 
               if (otherToggle && otherIcon) {
                 otherItem.classList.remove("active", "bg-green");
                 otherToggle.setAttribute("aria-expanded", "false");
-                otherItem.style.height = "160px";
+                (otherItem as HTMLElement).style.height = "160px";
                 otherIcon.classList.remove("rotate-180", "collapsed");
               }
             }
@@ -193,12 +207,12 @@ const { index, title, description, items } = Astro.props;
           if (!accordionItem.classList.contains("active")) {
             accordionItem.classList.add("active", "bg-green");
             accordionToggle.setAttribute("aria-expanded", "true");
-            accordionItem.style.height = accordionItem.scrollHeight + "px";
+            (accordionItem as HTMLElement).style.height = accordionItem.scrollHeight + "px";
             accordionIcon.classList.add("rotate-180", "collapsed");
           } else {
             accordionItem.classList.remove("active", "bg-green");
             accordionToggle.setAttribute("aria-expanded", "false");
-            accordionItem.style.height = "160px";
+            (accordionItem as HTMLElement).style.height = "160px";
             accordionIcon.classList.remove("rotate-180", "collapsed");
           }
 
@@ -216,11 +230,11 @@ const { index, title, description, items } = Astro.props;
         if (
           accordionToggle &&
           accordionIcon &&
-          !accordionItem.contains(event.target)
+          !accordionItem.contains(event.target as Node)
         ) {
           accordionItem.classList.remove("active", "bg-green");
           accordionToggle.setAttribute("aria-expanded", "false");
-          accordionItem.style.height = "160px";
+          (accordionItem as HTMLElement).style.height = "160px";
           accordionIcon.classList.remove("rotate-180", "collapsed");
         }
       });
