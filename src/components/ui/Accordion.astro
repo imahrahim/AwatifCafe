@@ -14,6 +14,32 @@ const coverImageBySection = {
   "Siakap": "/cover/CoverSiakap.png",
   "Snacks and Western": "/cover/CoverSnacks.png"
 };
+
+const itemImageByName = {
+  "Kerabu Daging": "/items/KerabuDaging.png",
+  "Kerabu Ikan Bilis": "/items/KerabuIkanBilis.png",
+  "Kerabu Udang": "/items/KerabuUdang.png",
+  "Kerabu Sohun": "/items/KerabuSohun.png",
+  "Kerabu Telur Masin": "/items/KerabuTelurMasin.png",
+  "Kerabu Sotong Udang": "/items/KerabuSotongUdang.png",
+  "Lala Goreng Pedas": "/items/LalaGorengPedas.png",
+  "Lala Kicap": "/items/LalaKicap.png",
+  "Lala Sambal": "/items/LalaSambal.png",
+  "Lala Masak Lemak Cili": "/items/LalaMasakLemakCili.png",
+  "Lala Serai": "/items/LalaSerai.png",
+  "Lala Serei Rebus": "/items/LalaSereiRebus.png",
+  "Siakap 3 Rasa": "/items/Siakap3Rasa.png",
+  "Siakap Beradab": "/items/SiakapBeradab.png",
+  "Siakap Curry": "/items/SiakapCurry.png",
+  "Siakap Stim": "/items/SiakapStim.png",
+  "Siakap Sweet Sour": "/items/SiakapSweetSour.png",
+  "Bendi": "/items/Bendi.png",
+  "Terung": "/items/Terung.png",
+  "Kailan": "/items/Kailan.png",
+  "Kacang Panjang": "/items/KacangPanjang.png",
+  "Kacang Buncis": "/items/KacangBuncispng.png",
+  "Bawang Putih": "/items/BawangPutih.png"
+};
 ---
 
 <div class="space-y-4">
@@ -24,6 +50,7 @@ const coverImageBySection = {
       description={item.description}
       items={item.items}
      coverImage={coverImageBySection[item.title]}
+       itemImageByName={itemImageByName}
     />
   ))}
 </div>

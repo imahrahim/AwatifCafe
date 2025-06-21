@@ -4,6 +4,7 @@ type Props = {
   title: string;
   description?: string;
   coverImage?: string;
+itemImageByName?: Record<string, string>;
   items: {
     category: string;
     priceLabels?: string[];
@@ -27,7 +28,7 @@ type Props = {
   }[];
 };
 
-const { index, title, description, items, coverImage } = Astro.props;
+const { index, title, description, items, coverImage, itemImageByName } = Astro.props;
 ---
 
 <div
@@ -38,7 +39,7 @@ const { index, title, description, items, coverImage } = Astro.props;
   <img 
     src={coverImage} 
     alt="Cover"
-    class="absolute right-3 w-40 max-w-[180px] h-auto object-contain opacity-90 z-0 pointer-events-none"
+    class="absolute right-3 w-40 max-w-[180px] h-auto object-contain opacity-70 z-0 pointer-events-none"
     style="top: -50px"
   />
 )}
@@ -98,6 +99,13 @@ const { index, title, description, items, coverImage } = Astro.props;
                     {entry.description && (
                       <div class="text-xs text-gray-500 mt-0.5">{entry.description}</div>
                     )}
+{entry?.name && itemImageByName?.[entry.name] && (
+  <img
+    src={itemImageByName[entry.name]}
+    alt={entry.name}
+    class="w-20 h-auto mt-2 rounded shadow"
+  />
+)}
                   </li>
                 ))}
               </ul>
@@ -115,6 +123,13 @@ const { index, title, description, items, coverImage } = Astro.props;
                   {entry.description && (
                     <div class="text-xs text-gray-500 mt-0.5">{entry.description}</div>
                   )}
+{entry?.name && itemImageByName?.[entry.name] && (
+  <img
+    src={itemImageByName[entry.name]}
+    alt={entry.name}
+    class="w-20 h-auto mt-2 rounded shadow"
+  />
+)}
                 </li>
               ))}
             </ul>
