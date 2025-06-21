@@ -3,6 +3,7 @@ type Props = {
   index: number;
   title: string;
   description?: string;
+  coverImage?: string;
   items: {
     category: string;
     priceLabels?: string[];
@@ -26,13 +27,22 @@ type Props = {
   }[];
 };
 
-const { index, title, description, items } = Astro.props;
+const { index, title, description, items, coverImage } = Astro.props;
 ---
 
 <div
   id="accordion__item"
-  class="accordion__item group h-[150px] bg-[#F3F3F3] overflow-hidden w-full transition-all duration-500 mb-[30px] rounded-[4px] border border-dark shadow-[5px_5px_0px_#673606]"
+  class="accordion__item relative group h-[150px] bg-[#F3F3F3] overflow-hidden w-full transition-all duration-500 mb-[30px] rounded-[4px] border border-dark shadow-[5px_5px_0px_#673606]"
 >
+{coverImage && (
+  <img 
+    src={coverImage} 
+    alt="Cover"
+    class="absolute right-3 w-40 max-w-[180px] h-auto object-contain opacity-90 z-0 pointer-events-none"
+    style="top: -50px"
+  />
+)}
+
   <button
     class="accordion__toggle w-full h-[160px] flex items-center justify-between p-[20px] cursor-pointer"
     id={`${title} accordion__item menu button`}
@@ -99,8 +109,8 @@ const { index, title, description, items } = Astro.props;
                   <div class="flex justify-between">
                     <span>{entry.name}</span>
                     <span class="font-semibold">
-  {"price" in entry ? entry.price : entry.prices?.[0] ?? ""}
-</span>
+                      {"price" in entry ? entry.price : entry.prices?.[0] ?? ""}
+                    </span>
                   </div>
                   {entry.description && (
                     <div class="text-xs text-gray-500 mt-0.5">{entry.description}</div>
@@ -198,7 +208,7 @@ const { index, title, description, items } = Astro.props;
               if (otherToggle && otherIcon) {
                 otherItem.classList.remove("active", "bg-green");
                 otherToggle.setAttribute("aria-expanded", "false");
-                (otherItem as HTMLElement).style.height = "160px";
+                otherItem.style.height = "160px";
                 otherIcon.classList.remove("rotate-180", "collapsed");
               }
             }
@@ -207,12 +217,12 @@ const { index, title, description, items } = Astro.props;
           if (!accordionItem.classList.contains("active")) {
             accordionItem.classList.add("active", "bg-green");
             accordionToggle.setAttribute("aria-expanded", "true");
-            (accordionItem as HTMLElement).style.height = accordionItem.scrollHeight + "px";
+            accordionItem.style.height = accordionItem.scrollHeight + "px";
             accordionIcon.classList.add("rotate-180", "collapsed");
           } else {
             accordionItem.classList.remove("active", "bg-green");
             accordionToggle.setAttribute("aria-expanded", "false");
-            (accordionItem as HTMLElement).style.height = "160px";
+            accordionItem.style.height = "160px";
             accordionIcon.classList.remove("rotate-180", "collapsed");
           }
 
@@ -230,11 +240,11 @@ const { index, title, description, items } = Astro.props;
         if (
           accordionToggle &&
           accordionIcon &&
-          !accordionItem.contains(event.target as Node)
+          !accordionItem.contains(event.target)
         ) {
           accordionItem.classList.remove("active", "bg-green");
           accordionToggle.setAttribute("aria-expanded", "false");
-          (accordionItem as HTMLElement).style.height = "160px";
+          accordionItem.style.height = "160px";
           accordionIcon.classList.remove("rotate-180", "collapsed");
         }
       });
