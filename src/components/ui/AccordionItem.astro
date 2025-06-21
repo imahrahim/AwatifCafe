@@ -103,7 +103,7 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
   <img
     src={itemImageByName[entry.name]}
     alt={entry.name}
-    class="w-20 h-auto mt-2 rounded shadow"
+    class="w-50 h-auto mt-5"
   />
 )}
                   </li>
@@ -113,24 +113,30 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
           ) : (
             <ul class="grid gap-2 text-base">
               {group.items.map((entry) => (
-                <li class="border-b border-black/10 pb-2">
-                  <div class="flex justify-between">
-                    <span>{entry.name}</span>
-                    <span class="font-semibold">
-                      {"price" in entry ? entry.price : entry.prices?.[0] ?? ""}
-                    </span>
-                  </div>
-                  {entry.description && (
-                    <div class="text-xs text-gray-500 mt-0.5">{entry.description}</div>
-                  )}
-{entry?.name && itemImageByName?.[entry.name] && (
-  <img
-    src={itemImageByName[entry.name]}
-    alt={entry.name}
-    class="w-20 h-auto mt-2 rounded shadow"
-  />
-)}
-                </li>
+<li class="border-b border-black/10 pb-2">
+  <div class="flex flex-col">
+    <div class="flex justify-between">
+      <span>{entry.name}</span>
+      <span class="font-semibold">
+        {"price" in entry ? entry.price : entry.prices?.[0] ?? ""}
+      </span>
+    </div>
+
+    {entry.description && (
+      <div class="text-xs text-gray-500 mt-0.5">{entry.description}</div>
+    )}
+
+    {entry?.name && itemImageByName?.[entry.name] && (
+      <div class="mt-2 flex justify-end">
+        <img
+          src={itemImageByName[entry.name]}
+          alt={entry.name}
+          class="w-20 h-20 object-cover rounded shadow"
+        />
+      </div>
+    )}
+  </div>
+</li>
               ))}
             </ul>
           )
