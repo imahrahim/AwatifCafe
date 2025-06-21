@@ -1,15 +1,23 @@
 ---
-const { isUnderline } = Astro.props;
+const { isUnderline, title, subtitle, destinations } = Astro.props;
 ---
 
-{
-  isUnderline ? (
-    <div class="rounded-[45px] border border-dark shadow-[0px_5px_0px_#191a23]">
-      <slot />
-    </div>
-  ) : (
-    <div class="rounded-[45px]">
-      <slot />
-    </div>
-  )
-}
+<div class={`rounded-[5px] ${isUnderline ? 'border border-[#673606] shadow-[5px_5px_0px_#673606]' : ''}`}>
+  <div class="p-[20px]">
+    {title && <h3 class="text-xl font-semibold">{title}</h3>}
+    {subtitle && <p class="text-sm italic text-[gray]-500 mb-4">{subtitle}</p>}
+
+    {destinations && Array.isArray(destinations) && (
+      <ul class="grid gap-1 text-base mb-4">
+        {destinations.map((item) => (
+          <li class="flex justify-between">
+            <span>{item.place}</span>
+            <span class="font-semibold italic"> {item.price}</span>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    <slot />
+  </div>
+</div>

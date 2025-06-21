@@ -2,10 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
   @font-face {
     font-family: "Grotesk";
-    src: url("/fonts/grotesk/SpaceGrotesk-Regular.woff"), format("woff");
+    src: url("/fonts/grotesk/MontserratAlternates-SemiBold.ttf"), format("ttf");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -13,38 +14,42 @@
 
   @font-face {
     font-family: "Grotesk";
-    src: url("/fonts/grotesk/SpaceGrotesk-Medium.woff"), format("woff");
+    src: url("/fonts/grotesk/MontserratAlternates-BlackItalic.ttf"), format("ttf");
     font-weight: 500;
     font-style: normal;
     font-display: swap;
   }
 
   .font-outline {
-    -webkit-text-stroke: 2.5px black;
+    -webkit-text-stroke: 2.5px #402a1c;
     background-color: transparent;
   }
   .font-outline-sm {
-    -webkit-text-stroke: 1.2px black;
+    -webkit-text-stroke: 1.2px #402a1c;
     background-color: transparent;
   }
 
   :root {
-    --green: #b9ff66;
-    --black: rgb(0, 0, 0);
-    --dark: #191a23;
+    --green: #f8c3da;
+    --black: #673606;
+    --dark: #673606;
     --gray: #f3f3f3;
     --white: #ffffff;
   }
 
-  /* @layer base {
+ @layer base {
     * {
       box-sizing: border-box;
       font-family: "Grotesk", sans-serif;
       scroll-behavior: smooth;
     }
+    img {
+      background-color: transparent !important;
+    }
 
     body {
       font-size: 20px;
+      color: #673606
     }
 
     p {
@@ -97,7 +102,7 @@
         font-size: 1.125rem;
       }
     }
-  } */
+  } 
 
   @layer components {
     .btn-primary {
@@ -122,7 +127,7 @@
     }
 
     .greenhead {
-      @apply bg-green text-black rounded-[7px] px-[7px];
+      @apply text-black rounded-[7px] px-[7px];
     }
 
     .whitehead {
@@ -141,15 +146,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f8c3da;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #000000;
 }
 
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #673606;
 }
 
 /* markdown style */
@@ -162,4 +168,8 @@
   margin: 20px 0;
   font-size: 1.4rem;
   font-weight: bold;
+}
+
+img {
+  background-color: transparent !important;
 }

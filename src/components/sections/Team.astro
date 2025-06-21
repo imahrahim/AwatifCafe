@@ -1,92 +1,156 @@
 ---
 import SectionTitle from "../ui/SectionTitle.astro";
-import TeamCard from "../ui/TeamCard.astro";
 import Section from "./Section.astro";
 
+// Bilder
+import snorkel from "../../assets/pics/snorkel.png";
+import rawaImg from "../../assets/pics/rawa.png";
+import redangImg from "../../assets/pics/redang.png";
+
 const description =
-  "Meet the skilled and experienced team behind our successful digital marketing strategies";
+  "Discover Perhentian’s best snorkelling spots – from colourful coral gardens to hidden turtle bays. Safe, guided trips for all skill levels.";
 
-// Team images
-import p1 from "../../assets/team/t1.png";
-import p2 from "../../assets/team/t2.png";
-import p3 from "../../assets/team/t3.png";
-import p4 from "../../assets/team/t4.png";
-import p5 from "../../assets/team/t5.png";
-import p6 from "../../assets/team/t6.png";
-
-const team = [
+// Gruppenstruktur: je 2 Trips zusammen
+const teamGroups = [
   {
-    pic: p1,
-    name: "John Smith",
-    role: "CEO and Founder",
-    description:
-      "10+ years of experience in digital marketing. Expertise in SEO, PPC, and content strategy",
-    link: "https://linkedin.com",
+    trips: [
+      {
+        pic: snorkel,
+        name: "Short Trip",
+        role: "10:30AM – 1:00PM",
+        description: ["Fish Point", "Turtle Point", "Shark Point"],
+        pricePerPerson: "RM 40",
+        privateBoatPrice: "RM 400",
+        privateBoatInfo: "1–8 persons",
+        link: "https://linkedin.com",
+      },
+      {
+        name: "Long Trip",
+        role: "10:30AM – 2:30PM",
+        description: [
+          "Fish Point",
+          "Turtle Point",
+          "Shark Point",
+          "Turtle Beach",
+          "Fisherman Village (Lunch)",
+        ],
+        pricePerPerson: "RM 50",
+        privateBoatPrice: "RM 550",
+        privateBoatInfo: "1–7 persons",
+        link: "https://linkedin.com",
+      },
+    ],
   },
   {
-    pic: p2,
-    name: "Jane Doe",
-    role: "Director of Operations",
-    description:
-      "7+ years of experience in project management and team leadership. Strong organizational and communication skills",
-    link: "https://linkedin.com",
+    trips: [
+      {
+        pic: rawaImg,
+        name: "Rawa Trip",
+        role: "",
+        description: ["Rawa", "Serenggeh", "Tukong Burung"],
+        pricePerPerson: "RM 70",
+        privateBoatPrice: "RM 500",
+        privateBoatInfo: "1–5 persons",
+        link: "https://linkedin.com",
+      },
+      {
+        name: "Special Trip",
+        role: "",
+        description: [
+          "Rawa",
+          "Serenggeh",
+          "Tukong Burung",
+          "Light House",
+          "Romantic Beach",
+        ],
+        pricePerPerson: "RM 90",
+        privateBoatPrice: "RM 700",
+        privateBoatInfo: "1–6 persons",
+        link: "https://linkedin.com",
+      },
+    ],
   },
   {
-    pic: p3,
-    name: "Michael Brown",
-    role: "Senior SEO Specialist",
-    description:
-      "5+ years of experience in SEO and content creation. Proficient in keyword research and on-page optimization",
-    link: "https://linkedin.com",
-  },
-  {
-    pic: p4,
-    name: "Emily Johnson",
-    role: "PPC Manager",
-    description:
-      "3+ years of experience in paid search advertising. Skilled in campaign management and performance analysis",
-    link: "https://linkedin.com",
-  },
-  {
-    pic: p5,
-    name: "Brian Williams",
-    role: "Social Media Specialist",
-    description:
-      "4+ years of experience in social media marketing. Proficient in creating and scheduling content, analyzing metrics, and building engagement",
-    link: "https://linkedin.com",
-  },
-  {
-    pic: p6,
-    name: "Sarah Kim",
-    role: "Content Creator",
-    description:
-      "2+ years of experience in writing and editing. Skilled in creating compelling, SEO-optimized content for various industries",
-    link: "https://linkedin.com",
+    trips: [
+      {
+        pic: redangImg,
+        name: "Redang Trip",
+        role: "Start: 9:00AM",
+        description: [
+          "Turtles",
+          "Guar @ Green Coral",
+          "Long Beach (Lunch)",
+          "Sand Bank",
+          "Teluk Batu Kucing",
+          "Silent Beach (Lang Tengah)",
+          "Lucky Baby Shark",
+        ],
+        pricePerPerson: "RM 150",
+        privateBoatPrice: "RM 900",
+        privateBoatInfo: "1–8 persons",
+        link: "https://linkedin.com",
+      },
+    ],
   },
 ];
 ---
 
 <Section id="about">
-  <div class="mt-[140px]">
-    <SectionTitle sectionTitle="Team" description={description} />
-    <div
-      class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 grid-rows-2 gap-10"
-    >
+  <div class="mt-[140px] mb-[10px]">
+    <SectionTitle sectionTitle="Snorkeling" description={description} />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
       {
-        team.map((member, index) => (
-          <TeamCard
-            key={index}
-            pic={member.pic}
-            name={member.name}
-            role={member.role}
-            description={member.description}
-            link={member.link}
-          />
-        ))
+        teamGroups.map((group) => {
+          const groupImage = group.trips.find(t => t.pic)?.pic;
+
+          return (
+            <div class="bg-white rounded-xl shadow-[5px_5px_0px_#673606] overflow-hidden border border-[#673606]">
+              {groupImage && (
+                <img
+                  src={groupImage.src}
+                  alt="Trip Image"
+                  class="w-full h-auto object-cover rounded-t-xl"
+                />
+              )}
+
+              <div class="px-6 pb-6 pt-4">
+                {
+                  group.trips.map((trip) => (
+                    <div class="mb-10 last:mb-0 space-y-4">
+                      <!-- Name & Zeit -->
+                      <div>
+                        <h3 class="font-bold text-lg text-[#673606]">{trip.name}</h3>
+                        {trip.role && <p class="text-sm text-[#673606] mt-1">{trip.role}</p>}
+                      </div>
+
+                      <!-- Trennlinie -->
+                      <div class="w-full h-[1px] bg-[#673606]"></div>
+
+                      <!-- Beschreibung -->
+                      <ul class="list-disc list-inside text-sm text-[#673606] space-y-1">
+                        {trip.description.map((item) => <li>{item}</li>)}
+                      </ul>
+
+                      <!-- Preise -->
+                      <div class="flex justify-between text-sm font-semibold text-[#673606] pt-1">
+                        <div>
+                          <div>{trip.pricePerPerson}</div>
+                          <div class="text-[11px] italic font-light">per person</div>
+                        </div>
+                        <div class="text-right">
+                          <div>{trip.privateBoatPrice}</div>
+                          <div class="text-[11px] italic font-light">{trip.privateBoatInfo}</div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
+            </div>
+          );
+        })
       }
-    </div>
-    <div class="flex justify-end mt-10">
-      <button class="btn-primary">See all team</button>
     </div>
   </div>
 </Section>

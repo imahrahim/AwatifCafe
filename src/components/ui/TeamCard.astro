@@ -3,22 +3,64 @@ import { Image } from "astro:assets";
 import linkd from "../../assets/pics/profile-in.svg";
 import Card from "./Card.astro";
 
-const { pic, name, role, description, link } = Astro.props;
+const {
+  pic,
+  name,
+  role,
+  description,
+  link,
+  pricePerPerson,
+  privateBoatPrice,
+  privateBoatInfo
+} = Astro.props;
 ---
 
 <Card isUnderline={true}>
-  <div class="p-[60px]">
+  <div class="p-[20px] text-[#673606]">
+    <!-- Kopfbereich -->
     <div class="flex flex-col sm:flex-row relative">
-      <picture><Image src={pic} alt={name} /></picture>
-      <div class="flex flex-col justify-end sm:ml-5">
-        <h3 class="text-lg font-medium">{name}</h3>
-        <p class="text-sm font-normal">{role}</p>
+      {pic && (
+        <picture>
+          <Image src={pic} alt={name} class="w-full max-w-[80px] sm:max-w-[100px] rounded-lg object-cover" />
+        </picture>
+      )}
+      <div class="flex flex-col justify-end sm:ml-5 mt-4 sm:mt-0">
+        <h3 class="text-lg font-semibold">{name}</h3>
+        {role && <p class="text-sm font-normal">{role}</p>}
       </div>
-      <a href={link} class="absolute right-0 top-0"
-        ><Image src={linkd} alt="Linkedin Logo" /></a
-      >
     </div>
-    <div class="w-full h-[1px] bg-black my-7"></div>
-    <div>{description}</div>
+
+    <!-- Trennlinie -->
+    <div class="w-full h-[1px] bg-[#673606] my-7"></div>
+
+    <!-- Beschreibung -->
+    {
+      Array.isArray(description) ? (
+        <ul class="list-disc list-inside text-sm space-y-1">
+          {description.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      ) : (
+        <p class="text-sm">{description}</p>
+      )
+    }
+
+    <!-- Preise -->
+    {(pricePerPerson || privateBoatPrice) && (
+      <div class="flex justify-between items-end mt-6 text-sm">
+        <!-- Links: Preis pro Person -->
+        <div>
+          <div class="italic font-semibold">{pricePerPerson}</div>
+          <div class="italic text-xs text-[#673606]">per person</div>
+        </div>
+
+        <!-- Rechts: Privatboot Preis -->
+        <div class="text-right">
+          <div class="italic font-semibold">{privateBoatPrice}</div>
+          <div class="italic text-xs text-[#673606]">{privateBoatInfo}</div>
+        </div>
+      </div>
+    )}
   </div>
 </Card>
