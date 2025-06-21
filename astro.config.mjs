@@ -1,13 +1,8 @@
 import { defineConfig } from 'astro/config';
-
 import tailwind from "@astrojs/tailwind";
 
-// Import the Vercel adapter
-import vercel from '@astrojs/vercel';
-
-// https://astro.build/config
 export default defineConfig({
-  site: "https://positivustheme.vercel.app",
+  site: "https://awatif-cafe-uakt.vercel.app", // oder deine eigene Domain
   integrations: [tailwind()],
-  output: 'static', 
+  output: 'static',
 });
