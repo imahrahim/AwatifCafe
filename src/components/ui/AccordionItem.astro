@@ -33,7 +33,7 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
 
 <div
   id="accordion__item"
-  class="accordion__item relative group h-[150px] bg-[#F3F3F3] overflow-hidden w-full transition-all duration-500 mb-[30px] rounded-[4px] border border-dark shadow-[5px_5px_0px_#673606]"
+  class="accordion__item relative group h-[150px] bg-[#F3F3F3] overflow-hidden w-full transition-all duration-500 mb-[10px] rounded-[4px] border border-dark shadow-[5px_5px_0px_#673606]"
 >
   {coverImage && (
     <img 
@@ -66,7 +66,12 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
     aria-labelledby={`${title}-accordion-toggle`}
     class="accordion__content px-[20px]"
   >
+
     <div class="w-full h-[1.5px] bg-[#673606] mb-4"></div>
+
+      <div class="flex justify-end -mt-2 mb-0">
+  <span class="text-sm font-semibold text-[#673606]">RM</span>
+</div>
 
     {items.map((group) => (
       <div class="mb-6">
@@ -90,7 +95,7 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
                       <div class="flex justify-between gap-10">
                         <span>{entry.name}</span>
                         {"prices" in entry ? (
-                          <div class="flex gap-10 font-semibold italic justify-end min-w-[80px]">
+                          <div class="flex gap-10 font-semibold justify-end min-w-[80px]">
                             <span class="w-[30px] text-right">{entry.prices[0]}</span>
                             <span class="w-[30px] text-right">{entry.prices[1]}</span>
                           </div>
@@ -207,6 +212,11 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
   border-radius: 0.5rem;
   margin-top: 0.75rem;
   margin-left: auto;
+}
+.price {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.95rem;
 }
 </style>
 

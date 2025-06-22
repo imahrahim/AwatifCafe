@@ -5,14 +5,22 @@ const { isUnderline, title, subtitle, destinations } = Astro.props;
 <div class={`rounded-[5px] ${isUnderline ? 'border border-[#673606] shadow-[5px_5px_0px_#673606]' : ''}`}>
   <div class="p-[20px]">
     {title && <h3 class="text-xl font-semibold">{title}</h3>}
-    {subtitle && <p class="text-sm italic text-[gray]-500 mb-4">{subtitle}</p>}
+    {subtitle && <p class="text-sm italic text-gray-500 mb-4">{subtitle}</p>}
 
+    <!-- RM Label -->
+    {destinations && destinations.length > 0 && (
+      <div class="flex justify-end mb-2 ">
+        <span class="text-sm font-semibold text-[#673606]">RM</span>
+      </div>
+    )}
+
+    <!-- Destination List -->
     {destinations && Array.isArray(destinations) && (
       <ul class="grid gap-1 text-base mb-4">
         {destinations.map((item) => (
           <li class="flex justify-between">
             <span>{item.place}</span>
-            <span class="font-semibold italic"> {item.price}</span>
+            <span class="font-semibold">{item.price}</span>
           </li>
         ))}
       </ul>
