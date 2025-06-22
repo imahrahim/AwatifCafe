@@ -36,12 +36,12 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
   class="accordion__item relative group h-[150px] bg-[#F3F3F3] overflow-hidden w-full transition-all duration-500 mb-[10px] rounded-[4px] border border-dark shadow-[5px_5px_0px_#673606]"
 >
   {coverImage && (
-    <img 
-      src={coverImage} 
-      alt="Cover"
-      class="absolute right-3 w-40 max-w-[180px] h-auto object-contain opacity-70 z-0 pointer-events-none"
-      style="top: -50px"
-    />
+  <img 
+  src={coverImage} 
+  alt="Cover"
+  class="absolute right-3 sm:right-6 w-28 sm:w-40 max-w-[160px] sm:max-w-[180px] h-auto object-contain opacity-100 z-0 pointer-events-none transition-all duration-300 ease-in-out"
+  style="top: -30px"
+/>
   )}
 
   <button
