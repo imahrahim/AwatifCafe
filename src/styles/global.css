@@ -30,7 +30,7 @@
   }
 
   :root {
-    --green: #f8c3da;
+    --green: #c4ffea;
     --black: #673606;
     --dark: #673606;
     --gray: #f3f3f3;
@@ -146,11 +146,11 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f8c3da;
+  background: #673606
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #000000;
+  background: #59ffc5;
 }
 
 
