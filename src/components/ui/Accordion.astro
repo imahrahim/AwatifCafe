@@ -1,6 +1,7 @@
 ---
 import AccordionItem from './AccordionItem.astro';
-import content from '/src/data/menu.json' assert { type: "json" };
+import menu from '/src/data/menu.ts';
+import type { MenuEntry } from '/src/data/menu.ts';
 
 
 const coverImageBySection = {
@@ -43,14 +44,14 @@ const itemImageByName = {
 ---
 
 <div class="space-y-4">
-  {content.map((item, index) => (
-    <AccordionItem
-      index={index}
-      title={item.title}
-      description={item.description}
-      items={item.items}
-     coverImage={coverImageBySection[item.title]}
-       itemImageByName={itemImageByName}
-    />
-  ))}
+{(menu as MenuEntry[]).map((item, index) => (
+  <AccordionItem
+    index={index}
+    title={item.title}
+    description={item.description}
+    items={item.items}
+    coverImage={coverImageBySection[item.title]}
+    itemImageByName={itemImageByName}
+  />
+))}
 </div>

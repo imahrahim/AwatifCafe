@@ -4,7 +4,7 @@ type Props = {
   title: string;
   description?: string;
   coverImage?: string;
-itemImageByName?: Record<string, string>;
+  itemImageByName?: Record<string, string>;
   items: {
     category: string;
     priceLabels?: string[];
@@ -35,14 +35,14 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
   id="accordion__item"
   class="accordion__item relative group h-[150px] bg-[#F3F3F3] overflow-hidden w-full transition-all duration-500 mb-[30px] rounded-[4px] border border-dark shadow-[5px_5px_0px_#673606]"
 >
-{coverImage && (
-  <img 
-    src={coverImage} 
-    alt="Cover"
-    class="absolute right-3 w-40 max-w-[180px] h-auto object-contain opacity-70 z-0 pointer-events-none"
-    style="top: -50px"
-  />
-)}
+  {coverImage && (
+    <img 
+      src={coverImage} 
+      alt="Cover"
+      class="absolute right-3 w-40 max-w-[180px] h-auto object-contain opacity-70 z-0 pointer-events-none"
+      style="top: -50px"
+    />
+  )}
 
   <button
     class="accordion__toggle w-full h-[160px] flex items-center justify-between p-[20px] cursor-pointer"
@@ -72,9 +72,11 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
 
     {items && items.map((group) => (
       <div class="mb-6">
-        <h4 class="font-bold text-lg mb-2 text-inherit">{group.category}</h4>
+        {group?.category && (
+          <h4 class="font-bold text-lg mb-2 text-inherit">{group.category}</h4>
+        )}
 
-        {group.items ? (
+        {Array.isArray(group.items) ? (
           group.priceLabels && group.priceLabels.length > 1 ? (
             <>
               <div class="flex justify-end gap-10 text-sm italic font-semibold text-right mt-1 mb-1 pr-2">
@@ -82,30 +84,35 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
                   <span>{label}</span>
                 ))}
               </div>
+
               <ul class="grid gap-2 text-base">
                 {group.items.map((entry) => (
                   <li class="border-b border-black/10 pb-2">
-                    <div class="flex justify-between gap-10">
-                      <span>{entry.name}</span>
-                      {"prices" in entry ? (
-                        <div class="flex gap-10 font-semibold italic justify-end min-w-[80px]">
-                          <span class="w-[30px] text-right">{entry.prices[0]}</span>
-                          <span class="w-[30px] text-right">{entry.prices[1]}</span>
-                        </div>
-                      ) : (
-                        <span class="font-semibold">{entry.price}</span>
+                    <div class="flex flex-col">
+                      <div class="flex justify-between gap-10">
+                        <span>{entry.name}</span>
+                        {"prices" in entry ? (
+                          <div class="flex gap-10 font-semibold italic justify-end min-w-[80px]">
+                            <span class="w-[30px] text-right">{entry.prices[0]}</span>
+                            <span class="w-[30px] text-right">{entry.prices[1]}</span>
+                          </div>
+                        ) : (
+                          <span class="font-semibold">{entry.price}</span>
+                        )}
+                      </div>
+
+                      {entry.description && (
+                        <div class="text-xs text-gray-500 mt-0.5">{entry.description}</div>
+                      )}
+
+                      {entry?.name && itemImageByName?.[entry.name] && (
+                        <img
+                          src={itemImageByName[entry.name]}
+                          alt={entry.name}
+                          class="menu-item-image"
+                        />
                       )}
                     </div>
-                    {entry.description && (
-                      <div class="text-xs text-gray-500 mt-0.5">{entry.description}</div>
-                    )}
-{entry?.name && itemImageByName?.[entry.name] && (
-  <img
-    src={itemImageByName[entry.name]}
-    alt={entry.name}
-    class="w-50 h-auto mt-5"
-  />
-)}
                   </li>
                 ))}
               </ul>
@@ -113,30 +120,28 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
           ) : (
             <ul class="grid gap-2 text-base">
               {group.items.map((entry) => (
-<li class="border-b border-black/10 pb-2">
-  <div class="flex flex-col">
-    <div class="flex justify-between">
-      <span>{entry.name}</span>
-      <span class="font-semibold">
-        {"price" in entry ? entry.price : entry.prices?.[0] ?? ""}
-      </span>
-    </div>
+                <li class="border-b border-black/10 pb-2">
+                  <div class="flex flex-col">
+                    <div class="flex justify-between">
+                      <span>{entry.name}</span>
+                      <span class="font-semibold">
+                        {"price" in entry ? entry.price : entry.prices?.[0] ?? ""}
+                      </span>
+                    </div>
 
-    {entry.description && (
-      <div class="text-xs text-gray-500 mt-0.5">{entry.description}</div>
-    )}
+                    {entry.description && (
+                      <div class="text-xs text-gray-500 mt-0.5">{entry.description}</div>
+                    )}
 
-    {entry?.name && itemImageByName?.[entry.name] && (
-      <div class="mt-2 flex justify-end">
-        <img
-          src={itemImageByName[entry.name]}
-          alt={entry.name}
-          class="w-20 h-20 object-cover rounded shadow"
-        />
-      </div>
-    )}
-  </div>
-</li>
+                    {entry?.name && itemImageByName?.[entry.name] && (
+                      <img
+                        src={itemImageByName[entry.name]}
+                        alt={entry.name}
+                        class="menu-item-image"
+                      />
+                    )}
+                  </div>
+                </li>
               ))}
             </ul>
           )
@@ -207,71 +212,80 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
 .accordion__icon.collapsed::after {
   opacity: 0;
 }
+
+.menu-item-image {
+  width: 15rem;
+  height: auto;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-top: 0.75rem;
+  margin-left: auto;
+}
 </style>
 
 <script>
-  function accordionSetup() {
-    const accordionItems = document.querySelectorAll(".accordion__item");
+function accordionSetup() {
+  const accordionItems = document.querySelectorAll(".accordion__item");
 
-    accordionItems.forEach((accordionItem) => {
-      const accordionToggle = accordionItem.querySelector(".accordion__toggle");
-      const accordionIcon = accordionItem.querySelector(".accordion__icon");
+  accordionItems.forEach((accordionItem) => {
+    const accordionToggle = accordionItem.querySelector(".accordion__toggle");
+    const accordionIcon = accordionItem.querySelector(".accordion__icon");
 
-      if (accordionToggle && accordionIcon) {
-        accordionToggle.addEventListener("click", (e) => {
-          e.stopPropagation();
+    if (accordionToggle && accordionIcon) {
+      accordionToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
 
-          accordionItems.forEach((otherItem) => {
-            if (otherItem !== accordionItem && otherItem.classList.contains("active")) {
-              const otherToggle = otherItem.querySelector(".accordion__toggle");
-              const otherIcon = otherItem.querySelector(".accordion__icon");
+        accordionItems.forEach((otherItem) => {
+          if (otherItem !== accordionItem && otherItem.classList.contains("active")) {
+            const otherToggle = otherItem.querySelector(".accordion__toggle");
+            const otherIcon = otherItem.querySelector(".accordion__icon");
 
-              if (otherToggle && otherIcon) {
-                otherItem.classList.remove("active", "bg-green");
-                otherToggle.setAttribute("aria-expanded", "false");
-                otherItem.style.height = "160px";
-                otherIcon.classList.remove("rotate-180", "collapsed");
-              }
+            if (otherToggle && otherIcon) {
+              otherItem.classList.remove("active", "bg-green");
+              otherToggle.setAttribute("aria-expanded", "false");
+              otherItem.style.height = "160px";
+              otherIcon.classList.remove("rotate-180", "collapsed");
             }
-          });
-
-          if (!accordionItem.classList.contains("active")) {
-            accordionItem.classList.add("active", "bg-green");
-            accordionToggle.setAttribute("aria-expanded", "true");
-            accordionItem.style.height = accordionItem.scrollHeight + "px";
-            accordionIcon.classList.add("rotate-180", "collapsed");
-          } else {
-            accordionItem.classList.remove("active", "bg-green");
-            accordionToggle.setAttribute("aria-expanded", "false");
-            accordionItem.style.height = "160px";
-            accordionIcon.classList.remove("rotate-180", "collapsed");
           }
-
-          e.preventDefault();
-          return false;
         });
-      }
-    });
 
-    document.addEventListener("click", (event) => {
-      accordionItems.forEach((accordionItem) => {
-        const accordionToggle = accordionItem.querySelector(".accordion__toggle");
-        const accordionIcon = accordionItem.querySelector(".accordion__icon");
-
-        if (
-          accordionToggle &&
-          accordionIcon &&
-          !accordionItem.contains(event.target)
-        ) {
+        if (!accordionItem.classList.contains("active")) {
+          accordionItem.classList.add("active", "bg-green");
+          accordionToggle.setAttribute("aria-expanded", "true");
+          accordionItem.style.height = accordionItem.scrollHeight + "px";
+          accordionIcon.classList.add("rotate-180", "collapsed");
+        } else {
           accordionItem.classList.remove("active", "bg-green");
           accordionToggle.setAttribute("aria-expanded", "false");
           accordionItem.style.height = "160px";
           accordionIcon.classList.remove("rotate-180", "collapsed");
         }
-      });
-    });
-  }
 
-  accordionSetup();
-  document.addEventListener("astro:after-swap", accordionSetup);
+        e.preventDefault();
+        return false;
+      });
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    accordionItems.forEach((accordionItem) => {
+      const accordionToggle = accordionItem.querySelector(".accordion__toggle");
+      const accordionIcon = accordionItem.querySelector(".accordion__icon");
+
+      if (
+        accordionToggle &&
+        accordionIcon &&
+        !accordionItem.contains(event.target)
+      ) {
+        accordionItem.classList.remove("active", "bg-green");
+        accordionToggle.setAttribute("aria-expanded", "false");
+        accordionItem.style.height = "160px";
+        accordionIcon.classList.remove("rotate-180", "collapsed");
+      }
+    });
+  });
+}
+
+accordionSetup();
+document.addEventListener("astro:after-swap", accordionSetup);
 </script>

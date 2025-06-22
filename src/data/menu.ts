@@ -1,4 +1,28 @@
-[
+export interface MenuEntry {
+  index: number;
+  title: string;
+  description?: string;
+  items: MenuCategory[];
+}
+
+export interface MenuCategory {
+  category: string;
+  priceLabels?: string[]; // z. B. ['Hot', 'Cold'] oder ['Small', 'Big']
+  items?: MenuItem[];      // normale Item-Liste (wenn keine Subkategorien)
+  subcategories?: MenuSubCategory[]; // wenn es z. B. 'Cold' & 'Hot' Subgruppen gibt
+}
+
+export type MenuItem =
+  | { name: string; price: string; description?: string }
+  | { name: string; prices: string[]; description?: string };
+
+export interface MenuSubCategory {
+  category: string;
+  items: { name: string; price: string; description?: string }[];
+}
+
+
+const menu: MenuEntry[] = [
     {
       "index": 1,
       "title": "Beverages",
@@ -1078,4 +1102,6 @@
       ],
       "description": "Seabass"
     }
-  ]
+  ];
+
+  export default menu;
