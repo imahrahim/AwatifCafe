@@ -35,25 +35,23 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
   id="accordion__item"
   class="accordion__item relative group h-[150px] bg-[#F3F3F3] overflow-hidden w-full transition-all duration-500 mb-[30px] rounded-[4px] border border-dark shadow-[5px_5px_0px_#673606]"
 >
-{typeof coverImage === 'string' && (
-  <img 
-    src={coverImage} 
-    alt="Cover"
-    class="absolute right-3 w-40 max-w-[180px] h-auto object-contain opacity-70 z-0 pointer-events-none"
-    style="top: -50px"
-  />
-)}
+  {coverImage && (
+    <img 
+      src={coverImage} 
+      alt="Cover"
+      class="absolute right-3 w-40 max-w-[180px] h-auto object-contain opacity-70 z-0 pointer-events-none"
+      style="top: -50px"
+    />
+  )}
 
   <button
     class="accordion__toggle w-full h-[160px] flex items-center justify-between p-[20px] cursor-pointer"
-    id={`${title} accordion__item menu button`}
+    id={`${title}-accordion-toggle`}
     aria-expanded="false"
-    aria-controls={`${title} accordion__item menu content`}
+    aria-controls={`${title}-accordion-content`}
   >
     <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-[25px] text-left">
-      <div class="flex items-center gap-2 sm:gap-[5px]">
-        <span class="text-xl font-bold">{title}</span>
-      </div>
+      <span class="text-xl font-bold">{title}</span>
       {description && (
         <p class="text-sm text-gray-500 leading-tight sm:ml-4 sm:mt-0 mt-1">
           {description}
@@ -64,15 +62,15 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
   </button>
 
   <div
-    id={`${title} accordion__item menu content`}
-    aria-labelledby={`${title} accordion__item menu button `}
+    id={`${title}-accordion-content`}
+    aria-labelledby={`${title}-accordion-toggle`}
     class="accordion__content px-[20px]"
   >
     <div class="w-full h-[1.5px] bg-[#673606] mb-4"></div>
 
-    {items && items.map((group) => (
+    {items.map((group) => (
       <div class="mb-6">
-        {group?.category && (
+        {group.category && (
           <h4 class="font-bold text-lg mb-2 text-inherit">{group.category}</h4>
         )}
 
@@ -100,12 +98,10 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
                           <span class="font-semibold">{entry.price}</span>
                         )}
                       </div>
-
                       {entry.description && (
                         <div class="text-xs text-gray-500 mt-0.5">{entry.description}</div>
                       )}
-
-                      {entry?.name && itemImageByName?.[entry.name] && (
+                      {entry.name && itemImageByName?.[entry.name] && (
                         <img
                           src={itemImageByName[entry.name]}
                           alt={entry.name}
@@ -128,12 +124,10 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
                         {"price" in entry ? entry.price : entry.prices?.[0] ?? ""}
                       </span>
                     </div>
-
                     {entry.description && (
                       <div class="text-xs text-gray-500 mt-0.5">{entry.description}</div>
                     )}
-
-                    {entry?.name && itemImageByName?.[entry.name] && (
+                    {entry.name && itemImageByName?.[entry.name] && (
                       <img
                         src={itemImageByName[entry.name]}
                         alt={entry.name}
@@ -173,18 +167,15 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
   background-color: rgba(248, 195, 218, 0.37);
   color: #673606;
 }
-
 .accordion__item.active {
   background-color: #f8c3da !important;
   color: #673606 !important;
 }
-
 .accordion__icon {
   position: relative;
   width: 1rem;
   height: 1rem;
 }
-
 .accordion__icon::before,
 .accordion__icon::after {
   content: "";
@@ -192,7 +183,6 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
   background-color: #402a1c;
   transition: opacity 0.3s ease;
 }
-
 .accordion__icon::before {
   width: 100%;
   height: 1px;
@@ -200,7 +190,6 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
   left: 0;
   transform: translateY(-50%);
 }
-
 .accordion__icon::after {
   width: 1px;
   height: 100%;
@@ -208,11 +197,9 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
   left: 50%;
   transform: translateX(-50%);
 }
-
 .accordion__icon.collapsed::after {
   opacity: 0;
 }
-
 .menu-item-image {
   width: 15rem;
   height: auto;
@@ -237,52 +224,66 @@ function accordionSetup() {
         e.stopPropagation();
 
         accordionItems.forEach((otherItemEl) => {
-          const otherItem = otherItemEl;
-          if (otherItem !== accordionItem && otherItem.classList.contains("active")) {
-            const otherToggle = otherItem.querySelector(".accordion__toggle");
-            const otherIcon = otherItem.querySelector(".accordion__icon");
+          if (otherItemEl !== accordionItem && otherItemEl.classList.contains("active")) {
+            const otherToggle = otherItemEl.querySelector(".accordion__toggle");
+            const otherIcon = otherItemEl.querySelector(".accordion__icon");
 
             if (otherToggle && otherIcon) {
-              otherItem.classList.remove("active", "bg-green");
+              otherItemEl.classList.remove("active");
               otherToggle.setAttribute("aria-expanded", "false");
-              (otherItem).style.height = "160px";
+              (otherItemEl as HTMLElement).style.height = "160px";
               otherIcon.classList.remove("rotate-180", "collapsed");
             }
           }
         });
 
         if (!accordionItem.classList.contains("active")) {
-          accordionItem.classList.add("active", "bg-green");
-          accordionToggle.setAttribute("aria-expanded", "true");
-          (accordionItem).style.height = accordionItem.scrollHeight + "px";
-          accordionIcon.classList.add("rotate-180", "collapsed");
+accordionItem.classList.add("active");
+accordionToggle.setAttribute("aria-expanded", "true");
+(accordionItem as HTMLElement).style.height = accordionItem.scrollHeight + "px";
+accordionIcon.classList.add("rotate-180", "collapsed");
+
+// Warten, bis DOM aktualisiert ist, dann scrollen
+setTimeout(() => {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const offset = 80; // Platz für Header oder Abstand
+      const rect = accordionItem.getBoundingClientRect();
+      const top = rect.top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: "smooth" });
+    });
+  });
+}, 300); // Wartezeit je nach Transition-Dauer (dein CSS ist 0.4s → 400ms, 300 reicht)
+
         } else {
-          accordionItem.classList.remove("active", "bg-green");
-          accordionToggle.setAttribute("aria-expanded", "false");
-          (accordionItem).style.height = "160px";
-          accordionIcon.classList.remove("rotate-180", "collapsed");
+          accordionItem.classList.remove("active");
+          if (accordionToggle) {
+  accordionToggle.setAttribute("aria-expanded", "false");
+}
+if (accordionIcon) {
+  accordionIcon.classList.remove("rotate-180", "collapsed");
+}
+          (accordionItem as HTMLElement).style.height = "160px";
         }
 
         e.preventDefault();
-        return false;
       });
     }
   });
 
   document.addEventListener("click", (event) => {
     accordionItems.forEach((accordionItemEl) => {
-      const accordionItem = accordionItemEl;
-      const accordionToggle = accordionItem.querySelector(".accordion__toggle");
-      const accordionIcon = accordionItem.querySelector(".accordion__icon");
+      const accordionToggle = accordionItemEl.querySelector(".accordion__toggle");
+      const accordionIcon = accordionItemEl.querySelector(".accordion__icon");
 
       if (
         accordionToggle &&
         accordionIcon &&
-        !(event.target instanceof Node) || !accordionItem.contains(event.target)
+        !(event.target instanceof Node) || !accordionItemEl.contains(event.target as Node)
       ) {
-        accordionItem.classList.remove("active", "bg-green");
+        accordionItemEl.classList.remove("active");
         accordionToggle.setAttribute("aria-expanded", "false");
-        (accordionItem).style.height = "160px";
+        (accordionItemEl as HTMLElement).style.height = "160px";
         accordionIcon.classList.remove("rotate-180", "collapsed");
       }
     });
