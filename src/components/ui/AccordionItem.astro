@@ -35,14 +35,14 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
   id="accordion__item"
   class="accordion__item relative group h-[150px] bg-[#F3F3F3] overflow-hidden w-full transition-all duration-500 mb-[30px] rounded-[4px] border border-dark shadow-[5px_5px_0px_#673606]"
 >
-  {coverImage && (
-    <img 
-      src={coverImage} 
-      alt="Cover"
-      class="absolute right-3 w-40 max-w-[180px] h-auto object-contain opacity-70 z-0 pointer-events-none"
-      style="top: -50px"
-    />
-  )}
+{typeof coverImage === 'string' && (
+  <img 
+    src={coverImage} 
+    alt="Cover"
+    class="absolute right-3 w-40 max-w-[180px] h-auto object-contain opacity-70 z-0 pointer-events-none"
+    style="top: -50px"
+  />
+)}
 
   <button
     class="accordion__toggle w-full h-[160px] flex items-center justify-between p-[20px] cursor-pointer"
@@ -227,7 +227,8 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
 function accordionSetup() {
   const accordionItems = document.querySelectorAll(".accordion__item");
 
-  accordionItems.forEach((accordionItem) => {
+  accordionItems.forEach((accordionItemEl) => {
+    const accordionItem = accordionItemEl;
     const accordionToggle = accordionItem.querySelector(".accordion__toggle");
     const accordionIcon = accordionItem.querySelector(".accordion__icon");
 
@@ -235,7 +236,8 @@ function accordionSetup() {
       accordionToggle.addEventListener("click", (e) => {
         e.stopPropagation();
 
-        accordionItems.forEach((otherItem) => {
+        accordionItems.forEach((otherItemEl) => {
+          const otherItem = otherItemEl;
           if (otherItem !== accordionItem && otherItem.classList.contains("active")) {
             const otherToggle = otherItem.querySelector(".accordion__toggle");
             const otherIcon = otherItem.querySelector(".accordion__icon");
@@ -243,7 +245,7 @@ function accordionSetup() {
             if (otherToggle && otherIcon) {
               otherItem.classList.remove("active", "bg-green");
               otherToggle.setAttribute("aria-expanded", "false");
-              otherItem.style.height = "160px";
+              (otherItem).style.height = "160px";
               otherIcon.classList.remove("rotate-180", "collapsed");
             }
           }
@@ -252,12 +254,12 @@ function accordionSetup() {
         if (!accordionItem.classList.contains("active")) {
           accordionItem.classList.add("active", "bg-green");
           accordionToggle.setAttribute("aria-expanded", "true");
-          accordionItem.style.height = accordionItem.scrollHeight + "px";
+          (accordionItem).style.height = accordionItem.scrollHeight + "px";
           accordionIcon.classList.add("rotate-180", "collapsed");
         } else {
           accordionItem.classList.remove("active", "bg-green");
           accordionToggle.setAttribute("aria-expanded", "false");
-          accordionItem.style.height = "160px";
+          (accordionItem).style.height = "160px";
           accordionIcon.classList.remove("rotate-180", "collapsed");
         }
 
@@ -268,18 +270,19 @@ function accordionSetup() {
   });
 
   document.addEventListener("click", (event) => {
-    accordionItems.forEach((accordionItem) => {
+    accordionItems.forEach((accordionItemEl) => {
+      const accordionItem = accordionItemEl;
       const accordionToggle = accordionItem.querySelector(".accordion__toggle");
       const accordionIcon = accordionItem.querySelector(".accordion__icon");
 
       if (
         accordionToggle &&
         accordionIcon &&
-        !accordionItem.contains(event.target)
+        !(event.target instanceof Node) || !accordionItem.contains(event.target)
       ) {
         accordionItem.classList.remove("active", "bg-green");
         accordionToggle.setAttribute("aria-expanded", "false");
-        accordionItem.style.height = "160px";
+        (accordionItem).style.height = "160px";
         accordionIcon.classList.remove("rotate-180", "collapsed");
       }
     });

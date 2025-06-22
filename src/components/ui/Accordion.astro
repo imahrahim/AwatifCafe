@@ -1,10 +1,9 @@
 ---
 import AccordionItem from './AccordionItem.astro';
-import menu from '/src/data/menu.ts';
-import type { MenuEntry } from '/src/data/menu.ts';
+import menu from '../../data/menu.ts';
+import type { MenuEntry } from '../../data/menu.ts';
 
-
-const coverImageBySection = {
+const coverImageBySection: Record<string, string> = {
   "Beverages": "/cover/CoverBeverages.png",
   "All Day Breakfast": "/cover/CoverBreakfast.png",
   "Shakes and Dessert": "/cover/CoverDessert.png",
@@ -16,7 +15,7 @@ const coverImageBySection = {
   "Snacks and Western": "/cover/CoverSnacks.png"
 };
 
-const itemImageByName = {
+const itemImageByName: Record<string, string> = {
   "Kerabu Daging": "/items/KerabuDaging.png",
   "Kerabu Ikan Bilis": "/items/KerabuIkanBilis.png",
   "Kerabu Udang": "/items/KerabuUdang.png",
@@ -44,14 +43,14 @@ const itemImageByName = {
 ---
 
 <div class="space-y-4">
-{(menu as MenuEntry[]).map((item, index) => (
-  <AccordionItem
-    index={index}
-    title={item.title}
-    description={item.description}
-    items={item.items}
-    coverImage={coverImageBySection[item.title]}
-    itemImageByName={itemImageByName}
-  />
-))}
+  {(menu as MenuEntry[]).map((item, index) => (
+    <AccordionItem
+      index={index}
+      title={item.title}
+      description={item.description}
+      items={item.items}
+      coverImage={typeof coverImageBySection[item.title] === "string" ? coverImageBySection[item.title] : ""}
+      itemImageByName={itemImageByName}
+    />
+  ))}
 </div>
