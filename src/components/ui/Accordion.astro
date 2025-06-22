@@ -14,7 +14,7 @@ import { coverImageBySection, itemImageByName } from '../../data/imageMap.ts';
   title={item.title}
   description={item.description}
   items={item.items}
-  coverImage={coverImageBySection && item.title in coverImageBySection ? coverImageBySection[item.title] : ""}
+  coverImage={coverImageBySection[item.title] ?? ""}
   itemImageByName={itemImageByName}
 />
   ))}
