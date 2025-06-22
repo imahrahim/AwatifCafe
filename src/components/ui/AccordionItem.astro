@@ -214,77 +214,85 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
 function accordionSetup() {
   const accordionItems = document.querySelectorAll(".accordion__item");
 
-  accordionItems.forEach((accordionItemEl) => {
-    const accordionItem = accordionItemEl;
-    const accordionToggle = accordionItem.querySelector(".accordion__toggle");
-    const accordionIcon = accordionItem.querySelector(".accordion__icon");
+  accordionItems.forEach((item) => {
+    const toggle = item.querySelector(".accordion__toggle");
+    const icon = item.querySelector(".accordion__icon");
 
-    if (accordionToggle && accordionIcon) {
-      accordionToggle.addEventListener("click", (e) => {
-        e.stopPropagation();
+    if (!(toggle instanceof HTMLElement) || !(icon instanceof HTMLElement)) return;
 
-        accordionItems.forEach((otherItemEl) => {
-          if (otherItemEl !== accordionItem && otherItemEl.classList.contains("active")) {
-            const otherToggle = otherItemEl.querySelector(".accordion__toggle");
-            const otherIcon = otherItemEl.querySelector(".accordion__icon");
+    toggle.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-            if (otherToggle && otherIcon) {
-              otherItemEl.classList.remove("active");
-              otherToggle.setAttribute("aria-expanded", "false");
-              (otherItemEl as HTMLElement).style.height = "160px";
-              otherIcon.classList.remove("rotate-180", "collapsed");
-            }
+      const isActive = item.classList.contains("active");
+
+      // Schließe andere Accordion-Items
+      accordionItems.forEach((other) => {
+        if (other !== item && other.classList.contains("active")) {
+          const otherToggle = other.querySelector(".accordion__toggle");
+          const otherIcon = other.querySelector(".accordion__icon");
+
+          if (
+            otherToggle instanceof HTMLElement &&
+            otherIcon instanceof HTMLElement &&
+            other instanceof HTMLElement
+          ) {
+            other.classList.remove("active");
+            otherToggle.setAttribute("aria-expanded", "false");
+            other.style.height = "160px";
+            otherIcon.classList.remove("rotate-180", "collapsed");
           }
-        });
+        }
+      });
 
-        if (!accordionItem.classList.contains("active")) {
-accordionItem.classList.add("active");
-accordionToggle.setAttribute("aria-expanded", "true");
-(accordionItem as HTMLElement).style.height = accordionItem.scrollHeight + "px";
-accordionIcon.classList.add("rotate-180", "collapsed");
+      if (!isActive) {
+        item.classList.add("active");
+        toggle.setAttribute("aria-expanded", "true");
 
-// Warten, bis DOM aktualisiert ist, dann scrollen
-setTimeout(() => {
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      const offset = 80; // Platz für Header oder Abstand
-      const rect = accordionItem.getBoundingClientRect();
-      const top = rect.top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: "smooth" });
-    });
-  });
-}, 300); // Wartezeit je nach Transition-Dauer (dein CSS ist 0.4s → 400ms, 300 reicht)
-
-        } else {
-          accordionItem.classList.remove("active");
-          if (accordionToggle) {
-  accordionToggle.setAttribute("aria-expanded", "false");
-}
-if (accordionIcon) {
-  accordionIcon.classList.remove("rotate-180", "collapsed");
-}
-          (accordionItem as HTMLElement).style.height = "160px";
+        if (item instanceof HTMLElement) {
+          item.style.height = item.scrollHeight + "px";
         }
 
-        e.preventDefault();
-      });
-    }
+        icon.classList.add("rotate-180", "collapsed");
+
+        // Scroll zum neuen aktiven AccordionItem
+        setTimeout(() => {
+          const offset = 80;
+          const rect = item.getBoundingClientRect();
+          const scrollToY = window.scrollY + rect.top - offset;
+          window.scrollTo({ top: scrollToY, behavior: "smooth" });
+        }, 400); // CSS-Transition berücksichtigen
+      } else {
+        item.classList.remove("active");
+        toggle.setAttribute("aria-expanded", "false");
+        icon.classList.remove("rotate-180", "collapsed");
+        if (item instanceof HTMLElement) {
+          item.style.height = "160px";
+        }
+      }
+    });
   });
 
+  // Schließen bei Klick außerhalb eines offenen AccordionItems
   document.addEventListener("click", (event) => {
-    accordionItems.forEach((accordionItemEl) => {
-      const accordionToggle = accordionItemEl.querySelector(".accordion__toggle");
-      const accordionIcon = accordionItemEl.querySelector(".accordion__icon");
+    const target = event.target;
+    if (!(target instanceof Node)) return;
+
+    accordionItems.forEach((item) => {
+      const toggle = item.querySelector(".accordion__toggle");
+      const icon = item.querySelector(".accordion__icon");
 
       if (
-        accordionToggle &&
-        accordionIcon &&
-        !(event.target instanceof Node) || !accordionItemEl.contains(event.target as Node)
+        toggle instanceof HTMLElement &&
+        icon instanceof HTMLElement &&
+        !item.contains(target)
       ) {
-        accordionItemEl.classList.remove("active");
-        accordionToggle.setAttribute("aria-expanded", "false");
-        (accordionItemEl as HTMLElement).style.height = "160px";
-        accordionIcon.classList.remove("rotate-180", "collapsed");
+        item.classList.remove("active");
+        toggle.setAttribute("aria-expanded", "false");
+        if (item instanceof HTMLElement) {
+          item.style.height = "160px";
+        }
+        icon.classList.remove("rotate-180", "collapsed");
       }
     });
   });
