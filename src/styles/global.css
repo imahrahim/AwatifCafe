@@ -30,7 +30,7 @@
   }
 
   :root {
-    --green: #c4ffea;
+    --green: rgb(163, 255, 223);
     --black: #673606;
     --dark: #673606;
     --gray: #f3f3f3;
@@ -150,7 +150,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #59ffc5;
+  background: rgb(163, 255, 223);
 }
 
 

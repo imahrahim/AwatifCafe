@@ -23,7 +23,7 @@ const menuitems = [
 
       <!-- ✅ Menü-Icon rechts -->
       <div class="ml-auto block lg:hidden">
-        <div id="menu-icon" class="w-6 h-6 text-[#C084FC] cursor-pointer">
+        <div id="menu-icon" class="w-6 h-6 cursor-pointer text-dark">
           <svg
             id="open-icon"
             xmlns="http://www.w3.org/2000/svg"
@@ -54,13 +54,13 @@ const menuitems = [
         </div>
         <ul
           id="menu-items"
-          class="hidden flex-col lg:flex lg:flex-row lg:space-x-10 font-medium text-center lg:text-left p-2 lg:p-0 text-[#C9FFE6] lg:bg-transparent lg:text-[#C084FC]"
+          class="hidden flex-col lg:flex lg:flex-row lg:space-x-10 font-medium text-center lg:text-left p-2 lg:p-0 text-[#C9FFE6] lg:bg-transparent lg:text-green"
         >
           {menuitems.map((item) => (
             <li>
               <a 
                 href={item.href}
-                class="block py-3 px-1 -mt-[20px] text-sm text-[#C084FC] hover:underline"
+                class="block py-3 px-1 -mt-[20px] text-sm text-green hover:underline"
                 data-close-menu="true"
               >
                 {item.label}
@@ -86,6 +86,16 @@ const menuitems = [
     const isHidden = menuItems.classList.toggle('hidden');
     openIcon.classList.toggle('hidden');
     closeIcon.classList.toggle('hidden');
+
+    // Farbe des Icons je nach Zustand ändern
+    if (isHidden) {
+      menuIcon.classList.remove('text-green');
+      menuIcon.classList.add('text-dark');
+    } else {
+      menuIcon.classList.remove('text-dark');
+      menuIcon.classList.add('text-green');
+    }
+
     if (menuBg) {
       menuBg.classList.toggle('hidden', isHidden);
     }
@@ -96,6 +106,8 @@ const menuitems = [
       menuItems.classList.add('hidden');
       openIcon.classList.remove('hidden');
       closeIcon.classList.add('hidden');
+      menuIcon.classList.remove('text-green');
+      menuIcon.classList.add('text-dark');
       if (menuBg) {
         menuBg.classList.add('hidden');
       }
