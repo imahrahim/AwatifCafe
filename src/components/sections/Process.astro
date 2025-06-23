@@ -8,20 +8,22 @@ const sectionTitle = "Awatif Cafe";
 const description = "Discover our full menu, from breakfast favorites to local specialties.";
 ---
 
-<Section id="process" noPadding={true} >
-  <div class="relative">
-    <!-- Hintergrundbild -->
+<Section id="process" noPadding={true}>
+  <div class="relative w-full overflow-hidden">
+    
+    <!-- Hintergrundbild (absolut) -->
     <img
       src={awatifCafe.src}
       alt="Awatif Cafe"
-      class="absolute top-10 left-0 w-full h-[200px] object-cover opacity-100 z-0"
+      class="absolute inset-0 w-full h-auto object-cover object-top z-0"
     />
 
-    <!-- Text und Inhalt -->
-    <div class="relative z-10 pt-[180px] pb-[60px] px-5 text-center text-[#fff]">
-      <h2 class="text-dark text-3xl font-bold">{sectionTitle}</h2>
-      <p class="text-dark mt-2 mb-5">{description}</p>
+    <!-- Text + Accordion (liegt über Bild) -->
+    <div class="relative z-10 text-center text-dark px-5 pt-[200px] sm:pt-[250px] md:pt-[350px] lg:pt-[450px] xl:pt-[500px] pb-[60px]">
+      <h2 class="text-3xl font-bold">{sectionTitle}</h2>
+      <p class="mt-2 mb-5">{description}</p>
       <Accordion />
     </div>
+
   </div>
 </Section>
