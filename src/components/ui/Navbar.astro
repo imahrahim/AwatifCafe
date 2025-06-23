@@ -1,7 +1,6 @@
 ---
 import { Astronav } from "astro-navbar";
-import { Image } from "astro:assets"; 
-import Rattan from "../../assets/Rattan.svg";
+import { Image } from "astro:assets";
 import Rat from "../../assets/Rat.svg";
 
 const menuitems = [
@@ -11,106 +10,85 @@ const menuitems = [
 ];
 ---
 
-<nav class="w-full fixed top-0 left-0 z-50 text-black">
-  <header class="relative flex flex-col items-center py-2 px-4 md:px-10">
-    <Astronav>
-      <!-- ✅ Zentriertes Logo -->
-      <div class="absolute left-1 top-1 sm:static sm:translate-x-0 z-10">
-        <a href="/" class="flex items-center space-x-2">
-          <img src="/Logo.svg" alt="Awatif Cafe" class="h-8 w-auto" />
-        </a>
-      </div>
+<nav class="w-full fixed top-0 left-0 z-50 text-dark">
+  <header id="menu-header" class="flex items-center justify-between px-4 md:px-10 py-3 bg-transparent">
+    <!-- Logo -->
+    <a href="/" class="flex items-center">
+      <img src="/Logo.svg" alt="Awatif Cafe" class="h-8 w-auto" />
+    </a>
 
-      <!-- ✅ Menü-Icon rechts -->
-      <div class="ml-auto block lg:hidden">
-        <div id="menu-icon" class="w-6 h-6 cursor-pointer text-dark">
-          <svg
-            id="open-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-          <svg
-            id="close-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            class="w-6 h-6 hidden"
-          >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </div>
-      </div>
+    <!-- Desktop-Menü -->
+    <ul class="hidden lg:flex space-x-10 text-dark text-sm">
+      {menuitems.map((item) => (
+        <li>
+          <a href={item.href} class="hover:underline">{item.label}</a>
+        </li>
+      ))}
+    </ul>
 
-      <!-- ✅ Navigation sichtbar bei Desktop & aufklappbar Mobil -->
-      <nav class="w-full mt-2 lg:mt-0">
-        <div id="menu-bg" class="hidden absolute inset-0 z-[-1]">
-          <Image src={Rat} alt="Rattan Background" class="w-full h-[200px] object-cover" />
-        </div>
-        <ul
-          id="menu-items"
-          class="hidden flex-col lg:flex lg:flex-row lg:space-x-10 font-lightx text-center lg:text-left p-2 lg:p-0 text-[#C9FFE6] lg:bg-transparent lg:text-green"
-        >
-          {menuitems.map((item) => (
-            <li>
-              <a 
-                href={item.href}
-                class="block py-3 px-1 -mt-[20px] text-sm text-green hover:underline"
-                data-close-menu="true"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </Astronav>
+    <!-- Mobile Icon -->
+    <div class="block lg:hidden">
+      <div id="menu-icon" class="w-6 h-6 cursor-pointer text-dark">
+        <svg id="open-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </div>
+    </div>
   </header>
+
+  <!-- Mobile-Menü -->
+  <div id="menu-mobile" class="hidden lg:hidden relative">
+    <div id="menu-bg" class="absolute inset-0 z-[-1]">
+      <Image src={Rat} alt="Rattan Background" class="w-full h-auto object-cover" />
+    </div>
+    <ul class="flex flex-col items-center py-4 space-y-3 text-green text-sm bg-beige">
+      {menuitems.map((item) => (
+        <li>
+          <a href={item.href} class="hover:underline" data-close-menu="true">{item.label}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
 </nav>
 
-<!-- ✅ JS Toggle für Mobile Menu -->
 <script is:inline>
   const menuIcon = document.getElementById('menu-icon');
   const openIcon = document.getElementById('open-icon');
   const closeIcon = document.getElementById('close-icon');
-  const menuItems = document.getElementById('menu-items');
-  const menuBg = document.getElementById('menu-bg');
+  const menuMobile = document.getElementById('menu-mobile');
   const closeMenuItems = document.querySelectorAll('[data-close-menu="true"]');
+  const header = document.getElementById('menu-header');
 
   menuIcon.addEventListener('click', () => {
-    const isHidden = menuItems.classList.toggle('hidden');
+    const isOpen = !menuMobile.classList.contains('hidden');
+    menuMobile.classList.toggle('hidden');
     openIcon.classList.toggle('hidden');
     closeIcon.classList.toggle('hidden');
+    menuIcon.classList.toggle('text-green', !isOpen);
+    menuIcon.classList.toggle('text-dark', isOpen);
 
-    // Farbe des Icons je nach Zustand ändern
-    if (isHidden) {
-      menuIcon.classList.remove('text-green');
-      menuIcon.classList.add('text-dark');
+    // Toggle bg-dark auf dem Header
+    if (isOpen) {
+      header.classList.remove('bg-dark');
+      header.classList.add('bg-transparent');
     } else {
-      menuIcon.classList.remove('text-dark');
-      menuIcon.classList.add('text-green');
-    }
-
-    if (menuBg) {
-      menuBg.classList.toggle('hidden', isHidden);
+      header.classList.remove('bg-transparent');
+      header.classList.add('bg-dark');
     }
   });
 
   closeMenuItems.forEach(item => {
     item.addEventListener('click', () => {
-      menuItems.classList.add('hidden');
+      menuMobile.classList.add('hidden');
       openIcon.classList.remove('hidden');
       closeIcon.classList.add('hidden');
       menuIcon.classList.remove('text-green');
       menuIcon.classList.add('text-dark');
-      if (menuBg) {
-        menuBg.classList.add('hidden');
-      }
+      header.classList.remove('bg-dark');
+      header.classList.add('bg-transparent');
     });
   });
 </script>

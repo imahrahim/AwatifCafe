@@ -11,50 +11,51 @@ const links = [
 ---
 
 
-<div class="w-full overflow-hidden" >
-  <Image src={Rattan} alt="Rattan Roof Border" class="w-full h-auto max-h-[180px] object-cover mt-[20px] " />
-</div>
+<section class="w-screen  text-green pt-0">
+  <!-- Rattan Border -->
+  <div class=" overflow-hidden -mb-4 mt-[50px]">
+    <Image 
+      src={Rattan} 
+      alt="Rattan Roof Border" 
+      class="w-full  object-fill"
+    />
+  </div>
 
-<section class="sm:px-5 mt-[0]">
-  <div class="w-full max-w-[1240px] mx-auto">
-    <div class="-px-[10px] bg-dark text-green py-[55px] -mt-[2px] lg:px-[10px] sm:rounded-t-[10px]">
-      <div>
-        <div class="flex flex-col lg:flex-row gap-7 items-center justify-between">
-          <picture>
-            <a href="#home">
-              <Image src={Logo} alt="Logo for Awatif Cafe" />
-            </a>
+  <!-- Footer Content -->
+  <div class="w-screen mx-auto px-5 py-[55px] bg-[#673606]">
+    <div class="flex flex-col lg:flex-row gap-7 items-center justify-between">
+      <a href="#home">
+        <Image src={Logo} alt="Logo for Awatif Cafe" />
+      </a>
 
-          <ul class="flex flex-col sm:flex-row gap-5">
-            {
-              links.map((link) => (
-                <li class="text-center">
-                  <a class="underline" href={link.href}>
-                    {link.name}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
+      <ul class="flex flex-col sm:flex-row gap-5">
+        {
+          links.map((link) => (
+            <li class="text-center font-light italic">
+              <a class="underline" href={link.href}>
+                {link.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
 
-        <div class="flex flex-col lg:flex-row mt-[66px] mb-[51px]">
-          <div class="flex text-center lg:text-start flex-col w-full lg:w-[30%]">
-            <div class="flex flex-col justify-between gap-4">
-              <span>Zubir: <a href="tel:+60189156727">+60 18-915 6727</a></span>
-              <span>Basir: <a href="tel:+601136100284">+60 11-3610 0284</a></span>
-              <span class="lg:w-3/4">
-                Long Beach <br /> Perhentian Kecil <br /> 22300 Besut <br /> Terengganu
-              </span>
-            </div>
-          </div>
+    <div class="flex flex-col lg:flex-row mt-[66px] mb-[51px]">
+      <div class="flex text-center lg:text-start flex-col w-full lg:w-[30%]">
+        <div class="flex flex-col justify-between gap-4">
+          <span>Zubir: <a href="tel:+60189156727">+60 18-915 6727</a></span>
+          <span>Basir: <a href="tel:+601136100284">+60 11-3610 0284</a></span>
+          <span class="lg:w-3/4">
+            Long Beach <br /> Perhentian Kecil <br /> 22300 Besut <br /> Terengganu
+          </span>
         </div>
       </div>
+    </div>
 
-      <div class="h-[1px] bg-green mb-5"></div>
-      <div class="flex flex-col lg:flex-row h-20 justify-center mt-4 text-center md:justify-between md:mt-0">
-        <span>2025 Awatif Cafe</span>
-      </div>
+    <div class="h-[1px] bg-green mb-5"></div>
+    <div class="flex flex-col lg:flex-row h-20 justify-center mt-4 text-center md:justify-between md:mt-0">
+      <span>2025 Awatif Cafe</span>
     </div>
   </div>
 </section>
