@@ -148,10 +148,10 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
           <div class="grid gap-4">
             {group.subcategories.map((sub) => (
               <div>
-                <h5 class="text-base font-italic  text-left mb-1">{sub.category}</h5>
+                <h5 class="text-base font-italic text-left mb-1">{sub.category}</h5>
                 <ul class="grid gap-1 text-sm border-l pl-4 border-green/10">
                   {sub.items.map((entry) => (
-<li class="flex text-sm">
+<li class="flex text-left text-sm">
   <span class="flex-grow pr-4">{entry.name}</span>
   <span class="font-semibold whitespace-nowrap">{entry.price}</span>
 </li>
