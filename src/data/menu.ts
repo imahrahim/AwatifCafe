@@ -590,7 +590,8 @@ const menu: MenuEntry[] = [
             },
             {
               "name": "Extra Cheese",
-              "price": "2"
+              "price": "2",
+               "description": "Add-on"
             }
           ]
         },
@@ -600,7 +601,6 @@ const menu: MenuEntry[] = [
             {
               "name": "Beef Tacos",
               "price": "18",
-              "description": "Add-on"
             },
             {
               "name": "Chicken Tacos",
