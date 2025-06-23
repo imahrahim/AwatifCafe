@@ -1,8 +1,8 @@
 ---
-const { id, noPadding = false } = Astro.props;
+const { id, noPadding = false, backgroundColor = "" } = Astro.props;
 ---
 
-<section id={id} class="px-0 flex justify-center overflow-hidden lg:block">
+<section id={id} class={`flex justify-center overflow-hidden ${backgroundColor}`}>
   <div class="w-full max-w-[1280px] mx-auto">
     <div class={noPadding ? "" : "px-5"}>
       <slot />

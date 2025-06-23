@@ -2,16 +2,26 @@
 import Accordion from "../ui/Accordion.astro";
 import SectionTitle from "../ui/SectionTitle.astro";
 import Section from "./Section.astro";
+import awatifCafe from "../../assets/pics/Awatif.png";
 
+const sectionTitle = "Awatif Cafe";
 const description = "Discover our full menu, from breakfast favorites to local specialties.";
 ---
 
-<Section id="process">
-  <div class="mt-[140px] mb-[50px]">
-    <SectionTitle
-      sectionTitle="Awatif Cafe"
-      description={description}  
+<Section id="process" noPadding={true} backgroundColor="bg-[#673606]">
+  <div class="relative">
+    <!-- Hintergrundbild -->
+    <img
+      src={awatifCafe.src}
+      alt="Awatif Cafe"
+      class="absolute top-0 left-0 w-full h-[300px] object-cover opacity-100 z-0"
     />
-    <Accordion />
+
+    <!-- Text und Inhalt -->
+    <div class="relative z-10 pt-[230px] pb-[60px] px-5 text-center text-[#fff]">
+      <h2 class="text-white text-3xl font-bold">{sectionTitle}</h2>
+      <p class="text-white mt-2 mb-5">{description}</p>
+      <Accordion />
+    </div>
   </div>
 </Section>

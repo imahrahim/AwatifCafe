@@ -33,7 +33,7 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
 
 <div
   id="accordion__item"
-  class="accordion__item relative group h-[150px] bg-[#F3F3F3] overflow-hidden w-full transition-all duration-500 mb-[10px] rounded-[4px] border border-dark shadow-[5px_5px_0px_#673606]"
+  class="accordion__item relative group h-[150px] bg-[#F3F3F3] overflow-hidden w-full transition-all duration-500 mb-[10px] rounded-[4px] border border-dark shadow-[5px_5px_0px_#fff]"
 >
   {coverImage && (
   <img 
@@ -76,7 +76,7 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
     {items.map((group) => (
       <div class="mb-6">
         {group.category && (
-          <h4 class="font-bold text-lg mb-2 text-inherit">{group.category}</h4>
+          <h4 class="font-bold text-lg mb-2 text-center">{group.category}</h4>
         )}
 
         {Array.isArray(group.items) ? (
@@ -88,9 +88,9 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
                 ))}
               </div>
 
-              <ul class="grid gap-2 text-base">
+              <ul class="grid gap-2 text-base text-left">
                 {group.items.map((entry) => (
-                  <li class="border-b border-black/10 pb-2">
+                  <li class="border-b border-green/10 pb-2">
                     <div class="flex flex-col">
                       <div class="flex justify-between gap-10">
                         <span>{entry.name}</span>
@@ -119,9 +119,9 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
               </ul>
             </>
           ) : (
-            <ul class="grid gap-2 text-base">
+            <ul class="grid gap-2 text-base text-left">
               {group.items.map((entry) => (
-                <li class="border-b border-black/10 pb-2">
+                <li class="border-b border-green/10 pb-2">
                   <div class="flex flex-col">
                     <div class="flex justify-between">
                       <span>{entry.name}</span>
@@ -148,13 +148,13 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
           <div class="grid gap-4">
             {group.subcategories.map((sub) => (
               <div>
-                <h5 class="text-base font-italic mb-1">{sub.category}</h5>
-                <ul class="grid gap-1 text-sm border-l pl-4 border-black/10">
+                <h5 class="text-base font-italic  text-left mb-1">{sub.category}</h5>
+                <ul class="grid gap-1 text-sm border-l pl-4 border-green/10">
                   {sub.items.map((entry) => (
-                    <li class="flex justify-between text-sm">
-                      <span>{entry.name}</span>
-                      <span class="font-semibold">{entry.price}</span>
-                    </li>
+<li class="flex text-sm">
+  <span class="flex-grow pr-4">{entry.name}</span>
+  <span class="font-semibold whitespace-nowrap">{entry.price}</span>
+</li>
                   ))}
                 </ul>
               </div>
@@ -169,11 +169,11 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
 <style>
 .accordion__item {
   transition: background-color 0.4s ease, color 0.4s ease;
-  background-color: rgba(247, 255, 252, 0.41);
+  background-color:rgb(221, 255, 243);
   color: #673606;
 }
 .accordion__item.active {
-  background-color:rgba(89, 255, 197, 0.45) !important;
+  background-color:rgb(163, 255, 223) !important;
   color: #673606 !important;
 }
 .accordion__icon {
@@ -185,7 +185,7 @@ const { index, title, description, items, coverImage, itemImageByName } = Astro.
 .accordion__icon::after {
   content: "";
   position: absolute;
-  background-color: #402a1c;
+  background-color: #673606;
   transition: opacity 0.3s ease;
 }
 .accordion__icon::before {

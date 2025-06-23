@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets"; 
 import Cases from "../components/sections/Cases.astro";
 import Contact from "../components/sections/Contact.astro";
 import Hero from "../components/sections/Hero.astro";
@@ -9,11 +10,12 @@ import Sponsors from "../components/sections/Sponsors.astro";
 import Team from "../components/sections/Team.astro";
 import Testimonials from "../components/sections/Testimonials.astro";
 import MainLayout from "../layouts/MainLayout.astro";
+import Rattan from "../assets/673606Rat.svg";
 ---
 
 <MainLayout
   title="Awatif Cafe"
-  description="Awatif Cafe on Long Beach Perhentian Kecil"
+  description="A Restaurant on Long Beach, Perhentian Kecil Island"
 >
 
  {/*
@@ -23,10 +25,19 @@ import MainLayout from "../layouts/MainLayout.astro";
   <Proposal /> */}
 
   <Process />
-<div class="relative h-[50px]">
-  <div class="absolute top-0 left-0 w-full h-[5px] bg-[#673606]"></div>
-  <div class="absolute top-[1px] left-0 w-full h-[50px] bg-gradient-to-b from-[#673606] to-transparent blur-sm opacity-40"></div>
+  {/* <div class="relative h-[50px]">
+  <div class="absolute top-0 left-0 w-full -mt-[2px] h-[20px] bg-[#673606]"></div>
+  <div class="absolute left-0 w-full h-[300px] bg-gradient-to-b from-[#673606] to-transparent blur-sm opacity-40"></div>
+</div> */}
+<!-- Gespiegelte Rattan-Leiste am unteren Rand -->
+<div class="w-full overflow-hidden -mt-[3px]">
+  <Image
+    src={Rattan}
+    alt="Rattan Mirror Border"
+    class="w-full h-auto max-h-[180px] object-cover transform rotate-180"
+  />
 </div>
+
   <Cases />
   <Team />
 
