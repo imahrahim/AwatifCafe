@@ -4,11 +4,12 @@ import Navbar from "../components/ui/Navbar.astro";
 import MainHead from "./MainHead.astro";
 import "../styles/global.css";
 
-const { ...props } = Astro.props;
+const { style, ...props } = Astro.props;
 ---
 
 <html lang="en">
   <MainHead {...props} />
+
   <style>
     html.lenis {
       height: auto;
@@ -23,13 +24,21 @@ const { ...props } = Astro.props;
       overflow: hidden;
     }
   </style>
+
   <script src="../utils/lenis"></script>
-  
-  <body class="bg-gradient-to-b from-white to-[#59ffc5] font-grotesk">
-    <main>
+
+  <body class="font-grotesk text-[#673606] min-h-screen bg-[#fef6e9]">
+    
+    <!-- ✅ Hintergrundbild-Layer mit Opazität -->
+    <div 
+      class="absolute inset-0 -z-10 opacity-30 bg-top bg-no-repeat bg-cover" 
+      style={style}
+    ></div>
+
+    <!-- ✅ Hauptinhalt bleibt darüber -->
+    <main class="relative z-10">
       <Navbar />
       <slot />
-      <Footer />
     </main>
   </body>
 </html>
