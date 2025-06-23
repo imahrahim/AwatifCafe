@@ -609,10 +609,6 @@ const menu: MenuEntry[] = [
             {
               "name": "Vegi Tacos",
               "price": "15"
-            },
-            {
-              "name": "Beef Kebab",
-              "price": "18"
             }
           ]
         },
@@ -621,6 +617,10 @@ const menu: MenuEntry[] = [
           "items": [
             {
               "name": "Chicken Kebab",
+              "price": "18"
+            },
+            {
+              "name": "Beef Kebab",
               "price": "18"
             }
           ]
