@@ -95,7 +95,7 @@ const teamGroups = [
 ];
 ---
 
-<Section id="about">
+<Section id="snorkel">
   <div class="mt-[140px] mb-[10px]">
     <SectionTitle sectionTitle="Snorkeling" description={description} />
 
@@ -105,7 +105,7 @@ const teamGroups = [
           const groupImage = group.trips.find(t => t.pic)?.pic;
 
           return (
-            <div class="bg-white rounded-xl shadow-[5px_5px_0px_#673606] overflow-hidden border border-[#673606]">
+            <div class="bg-white rounded-xl shadow-[5px_5px_0px_#00562c] overflow-hidden border border-[#00562c]">
               {groupImage && (
                 <img
                   src={groupImage.src}
@@ -120,29 +120,28 @@ const teamGroups = [
                     <div class="mb-20 last:mb-0 space-y-4">
                       <!-- Name & Zeit -->
 <div class="flex justify-between items-start">
-  <h3 class="font-bold text-lg text-[#673606]">{trip.name}</h3>
+  <h3 class="font-bold text-[#bfdee6]">{trip.name}</h3>
   {trip.role && (
-    <p class="text-[11px] italic font-light text-[#673606] ml-4 whitespace-nowrap">{trip.role}</p>
+    <p class="text-[11px] font-light text-[#bfdee6] ml-4 whitespace-nowrap">{trip.role}</p>
   )}
 </div>
 
-                      <!-- Trennlinie -->
-                      <div class="w-full h-[1px] bg-[#673606]"></div>
-
                       <!-- Beschreibung -->
-                      <ul class="list-disc list-inside text-sm text-[#673606] space-y-1">
-                        {trip.description.map((item) => <li>{item}</li>)}
-                      </ul>
+                    <ul class="text-sm text-[#00562c] space-y-1">
+  {trip.description.map((item) => (
+    <li>* {item}</li>
+  ))}
+</ul>
 
                       <!-- Preise -->
-                      <div class="flex justify-between text-sm font-semibold text-[#673606] pt-1">
+                      <div class="flex justify-between text-sm font-semibold text-[#00562c] pt-1">
                         <div>
                           <div>{trip.pricePerPerson}</div>
-                          <div class="text-[11px] italic font-light">per person</div>
+                          <div class="text-[11px] text-[#bfdee6] font-light">per person</div>
                         </div>
                         <div class="text-right">
                           <div>{trip.privateBoatPrice}</div>
-                          <div class="text-[11px] italic font-light">{trip.privateBoatInfo}</div>
+                          <div class="text-[11px] text-[#bfdee6] font-light">{trip.privateBoatInfo}</div>
                         </div>
                       </div>
                     </div>

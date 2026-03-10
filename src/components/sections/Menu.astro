@@ -1,28 +1,26 @@
 ---
 import SectionTitle from "../ui/SectionTitle.astro";
 import Section from "./Section.astro";
-import awatifCafe from "../../assets/Awatif.svg";
-import AwatifFull from "/public/AwatifFull.png";
 
 const sectionTitle = "Awatif Cafe";
 const description = "Discover our full menu, from breakfast favorites to local specialties.";
 ---
 
-<Section id="process" noPadding={true}>
-  <div class="relative w-full overflow-hidden">
-    
-
-
-    <!-- Text + Accordion (liegt über Bild) -->
 <Section id="menu" noPadding={true}>
-<div class="menu">
-  <img src="/menu/Beverages.webp" loading="lazy" class="w-full h-auto" />
-  <img src="/menu/Breakfast.webp" loading="lazy" class="w-full h-auto" />
-  <img src="/menu/Western.webp" loading="lazy" class="w-full h-auto" />
-  <img src="/menu/Local.webp" loading="lazy" class="w-full h-auto" />
-  <img src="/menu/Sayur.webp" loading="lazy" class="w-full h-auto" />
-  <img src="/menu/Dessert.webp" loading="lazy" class="w-full h-auto" />
-</div>
 
+  <!-- Titelbereich mit Padding -->
+  <div class="px-6 md:px-10 mt-[140px] mb-[40px]">
+    <SectionTitle sectionTitle={sectionTitle} description={description} />
   </div>
+
+  <!-- Menübilder Full Width -->
+  <div class="menu space-y-10">
+    <img src="/menu/Beverages.webp" loading="lazy" class="w-full h-auto" />
+    <img src="/menu/Breakfast.webp" loading="lazy" class="w-full h-auto" />
+    <img src="/menu/Western.webp" loading="lazy" class="w-full h-auto" />
+    <img src="/menu/Local.webp" loading="lazy" class="w-full h-auto" />
+    <img src="/menu/Sayur.webp" loading="lazy" class="w-full h-auto" />
+    <img src="/menu/Dessert.webp" loading="lazy" class="w-full h-auto" />
+  </div>
+
 </Section>

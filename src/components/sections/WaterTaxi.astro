@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import Section from "./Section.astro";
 import SectionTitle from "../ui/SectionTitle.astro";
-import Card from "../ui/Card.astro";
+import WaterTaxiCard from "../ui/WaterTaxiCard.astro";
 
 // Bilder importieren
 import kecilImage from "../../assets/pics/kecil.svg";
@@ -37,8 +37,8 @@ const besar = [
 ];
 ---
 
-<Section id="cases">
-  <div class="mt-[140px] text-[#673606]">
+<Section id="watertaxi">
+  <div class="mt-[140px] text-[#00562c]">
     <SectionTitle
       sectionTitle="Water Taxi"
       description="Choose your destination and let us take you there – price per person"
@@ -54,7 +54,7 @@ const besar = [
         />
       </div>
       <div>
-        <Card title="Perhentian Kecil" subtitle="Small Island" destinations={kecil} />
+        <WaterTaxiCard title="Perhentian Kecil" subtitle="Small Island" destinations={kecil} />
       </div>
 
       <!-- Perhentian Besar -->
@@ -66,7 +66,7 @@ const besar = [
         />
       </div>
       <div>
-        <Card title="Perhentian Besar" subtitle="Big Island" destinations={besar} />
+        <WaterTaxiCard title="Perhentian Besar" subtitle="Big Island" destinations={besar} />
       </div>
     </div>
   </div>
