@@ -1,94 +1,25 @@
 ---
-import { Astronav } from "astro-navbar";
-import { Image } from "astro:assets";
-import Rat from "../../assets/Rat.svg";
-
 const menuitems = [
-  { href: '/#menu', label: 'Menu' },
-  { href: '/#watertaxi', label: 'Water Taxi' },
-  { href: '/#snorkel', label: 'Snorkling' },
+  { href: "/#menu", label: "Menu" },
+  { href: "/#watertaxi", label: "Water Taxi" },
+  { href: "/#snorkel", label: "Snorkeling" },
 ];
 ---
 
 <nav class="w-full fixed top-0 left-0 z-50 text-dark">
-  <header id="menu-header" class="flex items-center justify-between px-4 md:px-10 py-3 bg-transparent">
-    <!-- Logo -->
+  <header class="flex items-center justify-between px-4 md:px-10 py-3 bg-transparent">
     <a href="/" class="flex items-center">
       <img src="/Logo.svg" alt="Awatif Cafe" class="h-8 w-auto" />
     </a>
 
-    <!-- Desktop-Menü -->
-    <ul class="hidden lg:flex space-x-10 text-dark text-sm">
+    <ul class="flex items-center gap-4 md:gap-8 text-[13px] md:text-sm">
       {menuitems.map((item) => (
         <li>
-          <a href={item.href} class="hover:underline">{item.label}</a>
+          <a href={item.href} class="hover:underline whitespace-nowrap">
+            {item.label}
+          </a>
         </li>
       ))}
     </ul>
-
-    <!-- Mobile Icon -->
-    <div class="block lg:hidden">
-      <div id="menu-icon" class="w-6 h-6 cursor-pointer text-dark">
-        <svg id="open-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-        </svg>
-        <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-        </svg>
-      </div>
-    </div>
   </header>
-
-  <!-- Mobile-Menü -->
-  <div id="menu-mobile" class="hidden lg:hidden relative">
-    <div id="menu-bg" class="absolute inset-0 z-[-1]">
-      <Image src={Rat} alt="Rattan Background" class="w-full h-auto object-cover" />
-    </div>
-    <ul class="flex flex-col items-center py-4 space-y-1 text-green text-sm bg-beige">
-      {menuitems.map((item) => (
-        <li>
-          <a href={item.href} class="hover:underline" data-close-menu="true">{item.label}</a>
-        </li>
-      ))}
-    </ul>
-  </div>
 </nav>
-
-<script is:inline>
-  const menuIcon = document.getElementById('menu-icon');
-  const openIcon = document.getElementById('open-icon');
-  const closeIcon = document.getElementById('close-icon');
-  const menuMobile = document.getElementById('menu-mobile');
-  const closeMenuItems = document.querySelectorAll('[data-close-menu="true"]');
-  const header = document.getElementById('menu-header');
-
-  menuIcon.addEventListener('click', () => {
-    const isOpen = !menuMobile.classList.contains('hidden');
-    menuMobile.classList.toggle('hidden');
-    openIcon.classList.toggle('hidden');
-    closeIcon.classList.toggle('hidden');
-    menuIcon.classList.toggle('text-green', !isOpen);
-    menuIcon.classList.toggle('text-dark', isOpen);
-
-    // Toggle bg-dark auf dem Header
-    if (isOpen) {
-      header.classList.remove('bg-dark');
-      header.classList.add('bg-transparent');
-    } else {
-      header.classList.remove('bg-transparent');
-      header.classList.add('bg-dark');
-    }
-  });
-
-  closeMenuItems.forEach(item => {
-    item.addEventListener('click', () => {
-      menuMobile.classList.add('hidden');
-      openIcon.classList.remove('hidden');
-      closeIcon.classList.add('hidden');
-      menuIcon.classList.remove('text-green');
-      menuIcon.classList.add('text-dark');
-      header.classList.remove('bg-dark');
-      header.classList.add('bg-transparent');
-    });
-  });
-</script>
