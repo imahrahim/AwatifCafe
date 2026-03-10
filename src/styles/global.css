@@ -6,22 +6,14 @@
 @layer base {
   @font-face {
     font-family: "Grotesk";
-    src: url("/fonts/grotesk/MontserratAlternates-SemiBold.ttf"), format("ttf");
+    src: url("/fonts/grotesk/SuisseIntl-Bold.otf"), format("otf");
     font-weight: normal;
     font-style: normal;
     font-display: swap;
   }
 
-  @font-face {
-    font-family: "Grotesk";
-    src: url("/fonts/grotesk/MontserratAlternates-BlackItalic.ttf"), format("ttf");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-  }
-
   .font-outline {
-    -webkit-text-stroke: 2.5px #402a1c;
+    -webkit-text-stroke: 2.5px #00562c;
     background-color: transparent;
   }
   .font-outline-sm {
@@ -30,8 +22,8 @@
   }
 
   :root {
-    --green: rgb(163, 255, 223);
-    --black: #673606;
+    --green: #bfdee6;
+    --black: #00562c;
     --dark: #673606;
     --gray: #f3f3f3;
     --white: #ffffff;

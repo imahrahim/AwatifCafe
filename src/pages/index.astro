@@ -1,7 +1,7 @@
 ---
-import Cases from "../components/sections/Cases.astro";
-import Process from "../components/sections/Process.astro";
-import Team from "../components/sections/Team.astro";
+import WaterTaxi from "../components/sections/WaterTaxi.astro";
+import Menu from "../components/sections/Menu.astro";
+import Snorkel from "../components/sections/Snorkel.astro";
 import Footer from "../components/ui/Footer.astro";
 import MainLayout from "../layouts/MainLayout.astro";
 import { Image } from "astro:assets"; 
@@ -13,13 +13,8 @@ import Wasser from "../assets/Wasser.png";
   title="Awatif Cafe"
   description="A Restaurant on Long Beach, Perhentian Kecil Island"
 >
-  {/* Optionaler Anfangsbereich */}
-  {/* <Hero />
-  <Sponsors />
-  <Services />
-  <Proposal /> */}
 
-  <Process />
+  <Menu />
 
   <!-- Wasser-Hintergrund beginnt hier -->
 <section class="relative z-0 min-h-full bg-gradient-to-b from-[#fef6e9] to-[#a3ffdf]">
@@ -33,8 +28,8 @@ import Wasser from "../assets/Wasser.png";
   </div>
 
   <!-- Inhalt -->
-  <Cases />
-  <Team />
+  <WaterTaxi />
+  <Snorkel />
   <Footer />
 </section>
 </MainLayout>
